@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
@@ -28,16 +27,24 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest registerRequest) {
-        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()){
-            return ResponseEntity.badRequest().body("Username Already Exist");
+    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request) {
+
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            return ResponseEntity.badRequest().body("Passwords do not match");
         }
-        User user=new User();
-        user.setUsername(registerRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+
+        if (userRepository.findByUsername(request.getUsername()).isPresent()
+                || userRepository.findByEmail(request.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("Username or Email already exists");
+        }
+
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("ROLE_USER");
 
         userRepository.save(user);
-        return ResponseEntity.ok("User Registered Successfully");
+        return ResponseEntity.ok("User registered successfully");
     }
 }

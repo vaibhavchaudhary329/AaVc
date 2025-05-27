@@ -24,12 +24,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
+        String username = loginRequest.getidentifier();
         String password = loginRequest.getPassword();
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(), loginRequest.getPassword()));
+                            loginRequest.getidentifier(),
+                            loginRequest.getPassword()
+                    )
+            );
             return ResponseEntity.ok("Login Successful");
         } catch (BadCredentialsException badCredentialsException) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("InvalidCredential");
