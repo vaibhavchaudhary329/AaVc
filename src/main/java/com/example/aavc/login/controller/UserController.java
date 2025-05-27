@@ -2,7 +2,6 @@ package com.example.aavc.login.controller;
 
 import com.example.aavc.login.dto.RegisterRequest;
 import com.example.aavc.login.entity.User;
-import com.example.aavc.login.kafka.KafkaProducerService;
 import com.example.aavc.login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private KafkaProducerService kafkaProducerService;
-
     private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
@@ -43,7 +38,6 @@ public class UserController {
         user.setRole("ROLE_USER");
 
         userRepository.save(user);
-        kafkaProducerService.sendUserEvent("New user registered: " + request.getUsername());
         return ResponseEntity.ok("User registered successfully");
     }
 }
