@@ -32,7 +32,7 @@ public class ForgotPasswordController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request){
-        Optional<User> userOpt= userRepository.findByUsername(request.getEmail().toLowerCase());
+        Optional<User> userOpt= userRepository.findByEmail(request.getEmail().toLowerCase());
         if(userOpt.isEmpty()){
             return ResponseEntity.badRequest().body("User not found");
         }
@@ -56,6 +56,10 @@ public class ForgotPasswordController {
         User user=userOpt.get();
         if(user.getTokenExpiry().isBefore(LocalDateTime.now())){
             return ResponseEntity.badRequest().body("Token expired");
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            return ResponseEntity.badRequest().body("Passwords do not match");
         }
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));

@@ -5,6 +5,8 @@ public class RegisterRequest {
     private String username;
     private String password;
 
+    private String confirmPassword;
+
     //getter
     public String getEmail(){ return email;}
     public String getUsername(){
@@ -12,6 +14,9 @@ public class RegisterRequest {
     }
     public String getPassword(){
         return password;
+    }
+    public String getConfirmPassword(){
+        return confirmPassword;
     }
 
     //setter
@@ -21,5 +26,8 @@ public class RegisterRequest {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
