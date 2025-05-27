@@ -30,17 +30,20 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest registerRequest) {
-        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()){
-            return ResponseEntity.badRequest().body("Username Already Exist");
+    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()
+                || userRepository.findByEmail(request.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("Username or Email already exists");
         }
-        User user=new User();
-        user.setUsername(registerRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("ROLE_USER");
 
         userRepository.save(user);
-        kafkaProducerService.sendUserEvent("New user registered: " + registerRequest.getUsername());
-        return ResponseEntity.ok("User Registered Successfully");
+        kafkaProducerService.sendUserEvent("New user registered: " + request.getUsername());
+        return ResponseEntity.ok("User registered successfully");
     }
 }

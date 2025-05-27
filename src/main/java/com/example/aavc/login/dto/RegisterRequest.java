@@ -1,10 +1,12 @@
 package com.example.aavc.login.dto;
 
 public class RegisterRequest {
+    private String email;
     private String username;
     private String password;
 
     //getter
+    public String getEmail(){ return email;}
     public String getUsername(){
         return username;
     }
@@ -13,6 +15,7 @@ public class RegisterRequest {
     }
 
     //setter
+    public void setEmail(String email){ this.email=email; }
     public void setUsername(String username) {
         this.username = username;
     }

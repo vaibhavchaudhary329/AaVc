@@ -26,18 +26,19 @@ public class AuthController{
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
+        String username = loginRequest.getidentifier();
         String password = loginRequest.getPassword();
         try{
             Authentication authentication=authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(), loginRequest.getPassword()
+                            loginRequest.getidentifier(),
+                            loginRequest.getPassword()
                     )
             );
-            kafkaProducerService.sendUserEvent("User Logged in:" + loginRequest.getUsername());
+            kafkaProducerService.sendUserEvent("User Logged in:" + loginRequest.getidentifier());
             return ResponseEntity.ok("Login Successful");
         }catch (BadCredentialsException badCredentialsException){
-            kafkaProducerService.sendUserEvent("User unable to login:" + loginRequest.getUsername());
+            kafkaProducerService.sendUserEvent("User unable to login:" + loginRequest.getidentifier());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("InvalidCredential");
         }
     }
