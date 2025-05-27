@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-function Signup() {
-  const [username, setUsername] = useState('');
+function ResetPassword() {
+ 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+
 
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmpassword) {
       setError("Passwords do not match");
@@ -40,25 +40,10 @@ function Signup() {
         boxShadow: '0 4px 12px rgba(0, 0, 255, 0.1)'
       }}
     >
-      <h2 style={{ color: '#1E3A8A', marginBottom: '20px' }}>Sign Up</h2>
+      <h2 style={{ color: '#1E3A8A', marginBottom: '20px' }}>Reset Password</h2>
       <form onSubmit={handleSignup}>
-        <div style={{ marginBottom: '15px' }}>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #1E3A8A',
-              outline: 'none',
-            }}
-          />
-        </div>
-
+        
+{/* 
         <div style={{ marginBottom: '15px' }}>
           <input
             type="email"
@@ -74,7 +59,7 @@ function Signup() {
               outline: 'none',
             }}
           />
-        </div>
+        </div> */}
 
         <div style={{ marginBottom: '15px' }}>
           <input
@@ -146,4 +131,4 @@ function Signup() {
 
 }
 
-export default Signup;
+export default ResetPassword;
