@@ -6,23 +6,24 @@ function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmpassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (password !== confirmpassword) {
+    if (password !== confirmPassword) {
       setError("Passwords do not match");
     }
-    else if (password == confirmpassword) {
+    else if (password == confirmPassword) {
       try {
-        const response = await axios.post('http://localhost:8080/user/register', { username, password });
+        const response = await axios.post('http://localhost:8080/user/register', { username, email ,password, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {
         console.error("Error is", error);
+        setError(error.response.data);
       }
     }
   };
@@ -97,7 +98,7 @@ function Signup() {
           <input
             type="password"
             placeholder="Confirm Password"
-            value={confirmpassword}
+            value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             style={{

@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
 function ResetPassword() {
- 
+
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  console.log("Token:",token);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmpassword, setConfirmPassword] = useState('');
-
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmpassword) {
+    if (password !== confirmPassword) {
       setError("Passwords do not match");
     }
-    else if (password == confirmpassword) {
+    else if (password == confirmPassword) {
       try {
-        const response = await axios.post('http://localhost:8080/user/register', { username, password });
+        const response = await axios.post('http://localhost:8080/auth/reset-password"', { token, password, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {
         console.error("Error is", error);
+        setError('Error');
       }
+      console.log("Data", token, password, confirmPassword);
     }
   };
 
@@ -41,9 +46,9 @@ function ResetPassword() {
       }}
     >
       <h2 style={{ color: '#1E3A8A', marginBottom: '20px' }}>Reset Password</h2>
-      <form onSubmit={handleSignup}>
-        
-{/* 
+      <form onSubmit={handleSubmit}>
+
+        {/* 
         <div style={{ marginBottom: '15px' }}>
           <input
             type="email"
@@ -82,7 +87,7 @@ function ResetPassword() {
           <input
             type="password"
             placeholder="Confirm Password"
-            value={confirmpassword}
+            value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             style={{
@@ -101,7 +106,7 @@ function ResetPassword() {
           style={{
             width: '100%',
             padding: '10px',
-            margin:'10px',
+            margin: '10px',
             backgroundColor: '#1E3A8A',
             color: 'white',
             border: 'none',
@@ -110,20 +115,7 @@ function ResetPassword() {
             fontWeight: 'bold',
           }}
         >
-          Sign Up
-        </button>
-        <button onClick={() => navigate('/signin')}  style={{
-            width: '100%',
-            padding: '10px',
-            margin:'10px',
-            backgroundColor: '#1E3A8A',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontWeight: 'bold',
-          }}>
-        Existing User? 
+          Submit
         </button>
       </form>
     </div>
