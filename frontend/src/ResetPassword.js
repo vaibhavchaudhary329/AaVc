@@ -6,9 +6,9 @@ function ResetPassword() {
 
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  console.log("Token:",token);
+  //console.log("Token:",token);
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [newPassword, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -16,19 +16,19 @@ function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
       setError("Passwords do not match");
     }
-    else if (password == confirmPassword) {
+    else if (newPassword == confirmPassword) {
       try {
-        const response = await axios.post('http://localhost:8080/auth/reset-password"', { token, password, confirmPassword });
+        const response = await axios.post('http://localhost:8080/auth/reset-password', { token, newPassword, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {
         console.error("Error is", error);
         setError('Error');
       }
-      console.log("Data", token, password, confirmPassword);
+      console.log("Data", token, newPassword, confirmPassword);
     }
   };
 
@@ -70,7 +70,7 @@ function ResetPassword() {
           <input
             type="password"
             placeholder="Password"
-            value={password}
+            value={newPassword}
             onChange={(e) => setPassword(e.target.value)}
             required
             style={{
