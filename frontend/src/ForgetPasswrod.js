@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ForgetPassword() {
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
 
     const navigate = useNavigate();
 
@@ -11,11 +12,11 @@ function ForgetPassword() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/auth/forget-password', { email});
+            const response = await axios.post('http://localhost:8080/auth/forgot-password', { email });
             alert(response.data);
-            navigate('/home');
         } catch (error) {
             console.error("Error is", error);
+            setError('Error');
         }
         // TODO: send this data to backend
         console.log('Email:', email);
@@ -50,6 +51,7 @@ function ForgetPassword() {
                         }}
                     />
                 </div>
+                {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
                 <button type="submit" style={{
                     width: '100%',
                     padding: '10px',

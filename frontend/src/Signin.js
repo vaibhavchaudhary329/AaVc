@@ -3,8 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function Signin() {
-    const [username, setUsername] = useState('');
+    const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const navigate = useNavigate();
 
@@ -12,14 +13,15 @@ function Signin() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/auth/login', { username, password });
+            const response = await axios.post('http://localhost:8080/auth/login', { identifier, password });
             alert(response.data);
             navigate('/home');
         } catch (error) {
             console.error("Error is", error);
+            setError(error.response.data);
         }
         // TODO: send this data to backend
-        console.log('Username:', username);
+        console.log('Email:', identifier);
         console.log('Password:', password);
     };
 
@@ -39,9 +41,9 @@ function Signin() {
                 <div style={{ marginBottom: '15px' }}>
                     <input
                         type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Email"
+                        value={identifier}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                         style={{
                             width: '100%',
@@ -68,6 +70,7 @@ function Signin() {
                         }}
                     />
                 </div>
+                {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
                 <button type="submit" style={{
                     width: '100%',
                     padding: '10px',
