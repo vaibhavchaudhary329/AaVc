@@ -13,7 +13,7 @@ public class EmailService {
 
     public void sendResetLink(String to,String token){
         String subject= "Password reset link";
-        String resetUrl= "http://localhost:8080/auth/reset-password?token=" + token;
+        String resetUrl= "http://localhost:3000/auth/reset-password?token=" + token;
         String text= "Click the link below to reset you password\n" +resetUrl;
 
         SimpleMailMessage message= new SimpleMailMessage();
