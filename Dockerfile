@@ -1,14 +1,21 @@
-# Use a lightweight base image with Java
-FROM eclipse-temurin:21-jdk-alpine
+# Stage 1: Build the JAR using Gradle and Java 21
+FROM gradle:8.4-jdk21 AS builder
 
-# Set working directory
+# Copy project source into the container
+COPY --chown=gradle:gradle . /home/gradle/project
+WORKDIR /home/gradle/project
+
+# Build the project without running tests (avoid DB/Kafka errors)
+RUN gradle build -x test --no-daemon
+
+# Stage 2: Run the built JAR with Java 21 runtime
+FROM eclipse-temurin:21-jdk
+
+# App directory
 WORKDIR /app
 
-# Copy the built JAR file into the container
-COPY build/libs/login-0.0.1-SNAPSHOT.jar app.jar
+# Copy the JAR from the builder stage
+COPY --from=builder /home/gradle/project/build/libs/*.jar app.jar
 
-# Expose port (optional, just for documentation)
-EXPOSE 8080
-
-# Run the application
+# Run the app
 ENTRYPOINT ["java", "-jar", "app.jar"]
