@@ -18,7 +18,7 @@ function Signup() {
     }
     else if (password == confirmPassword) {
       try {
-        const response = await axios.post('http://localhost:8080/user/register', { username, email ,password, confirmPassword });
+        const response = await axios.post('https://aavc.onrender.com/user/register', { username, email ,password, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {
