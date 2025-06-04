@@ -1,18 +1,16 @@
 services:
   - type: web
-    name: springboot-login-api
-    env: java
-    buildCommand: ./gradlew build
-    startCommand: java -jar build/libs/login-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+    name: fullstack-login-app
+    env: docker
     plan: free
+    region: oregon
 
-  # React frontend (Static Site)
-  - type: static
-    name: aavc-frontend
-    env: static
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/build
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+
+databases:
+  - name: postgres-login
     plan: free
-    envVars:
-      - key: REACT_APP_API_URL
-        value: https://springboot-login-api.onrender.com
+    region: oregon
+    databaseName: login_0fm2
+    user: login_0fm2_user
