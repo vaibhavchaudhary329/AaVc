@@ -1,12 +1,34 @@
 services:
   - type: web
-    name: fullstack-login-app
+    name: aavc
     env: docker
     plan: free
     region: oregon
 
     dockerfilePath: ./Dockerfile
     autoDeploy: true
+
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - fromDatabase:
+          name: dpg-d0smrhidbo4c73f871n0-a
+          property: host
+          envVarKey: SPRING_DATASOURCE_HOST
+      - fromDatabase:
+          name: login_0fm2_user
+          property: user
+          envVarKey: SPRING_DATASOURCE_USERNAME
+      - fromDatabase:
+          name: 5X8TN66MGPY2lYFhmEm6W3KT2I5s1Pls
+          property: password
+          envVarKey: SPRING_DATASOURCE_PASSWORD
+      - fromDatabase:
+          name: login_0fm2
+          property: database
+          envVarKey: SPRING_DATASOURCE_DATABASE
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://login_0fm2_user:5X8TN66MGPY2lYFhmEm6W3KT2I5s1Pls@dpg-d0smrhidbo4c73f871n0-a/login_0fm2
 
 databases:
   - name: postgres-login
