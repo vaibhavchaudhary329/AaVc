@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: springboot-login-api
-    env: java
-    buildCommand: ./gradlew build
-    startCommand: java -jar build/libs/login-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
-    plan: free
