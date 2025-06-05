@@ -12,7 +12,7 @@ function ForgetPassword() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://aavc.onrender.com/auth/forgot-password', { email });
+            const response = await axios.post('https://aavc.onrender.com/auth/forgot-password', { email });
             alert(response.data);
         } catch (error) {
             console.error("Error is", error);

@@ -5,7 +5,7 @@ function Home() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get('http://aavc.onrender.com/user/home')
+        axios.get('https://aavc.onrender.com/user/home')
             .then(response => { setMessage(response.data) })
             .catch(error => {
                  console.log("Error is:", error); 

@@ -20,7 +20,7 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post('http://aavc.onrender.com/user/register', {
+      const response = await axios.post('https://aavc.onrender.com/user/register', {
         username, email, password, confirmPassword
       });
       alert(response.data);

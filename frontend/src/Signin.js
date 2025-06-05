@@ -13,7 +13,7 @@ function Signin() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://aavc.onrender.com/auth/login', { identifier, password });
+            const response = await axios.post('https://aavc.onrender.com/auth/login', { identifier, password });
             alert(response.data);
             navigate('/home');
         } catch (error) {
