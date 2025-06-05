@@ -21,7 +21,7 @@ function ResetPassword() {
     }
     else if (newPassword == confirmPassword) {
       try {
-        const response = await axios.post('http://localhost:8080/auth/reset-password', { token, newPassword, confirmPassword });
+        const response = await axios.post('http://aavc.onrender.com/auth/reset-password', { token, newPassword, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {
