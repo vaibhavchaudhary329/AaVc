@@ -44,7 +44,7 @@ public class SecurityConfig {
         config.setAllowCredentials(true);
         config.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "https://aavc.onrender.com/"
+                "https://aavc.netlify.app"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));

@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "https://aavc.netlify.app")
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
