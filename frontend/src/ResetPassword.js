@@ -6,7 +6,7 @@ function ResetPassword() {
 
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  //console.log("Token:",token);
+  console.log("Token:",token);
   const [email, setEmail] = useState('');
   const [newPassword, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,7 +21,7 @@ function ResetPassword() {
     }
     else if (newPassword == confirmPassword) {
       try {
-        const response = await axios.post('http://localhost:8080/auth/reset-password', { token, newPassword, confirmPassword });
+        const response = await axios.post('https://aavc.onrender.com/auth/reset-password', { token, newPassword, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {
