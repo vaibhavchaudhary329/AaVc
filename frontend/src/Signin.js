@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FaEyeSlash, FaEye } from 'react-icons/fa';
 
 function Signin() {
     const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState('');
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
@@ -56,7 +58,7 @@ function Signin() {
                 </div>
                 <div style={{ marginBottom: '15px' }}>
                     <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -69,6 +71,18 @@ function Signin() {
                             outline: 'none',
                         }}
                     />
+                    <span onClick={() => setShowPassword((prev) => !prev)}
+                        style={{
+                            position: 'absolute',
+                            top: '42%',
+                            right: '37%',
+                            transform: 'translateY(-50%)',
+                            cursor: 'pointer',
+                            fontSize: '18px'
+                        }}
+                    >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
                 </div>
                 {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
                 <button type="submit" style={{

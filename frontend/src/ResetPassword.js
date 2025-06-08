@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { FaEyeSlash, FaEye } from 'react-icons/fa';
+
 
 function ResetPassword() {
 
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  console.log("Token:",token);
+  console.log("Token:", token);
   const [email, setEmail] = useState('');
-  const [newPassword, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showConfirmPassword, setShowConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
@@ -68,10 +72,10 @@ function ResetPassword() {
 
         <div style={{ marginBottom: '15px' }}>
           <input
-            type="password"
+            type={showNewPassword ? 'text' : 'password'}
             placeholder="Password"
             value={newPassword}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setNewPassword(e.target.value)}
             required
             style={{
               width: '100%',
@@ -81,11 +85,23 @@ function ResetPassword() {
               outline: 'none',
             }}
           />
+          <span onClick={() => setShowNewPassword((prev) => !prev)}
+            style={{
+              position: 'absolute',
+              top: '34%',
+              right: '37%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              fontSize: '18px'
+            }}
+          >
+            {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
 
         <div style={{ marginBottom: '20px' }}>
           <input
-            type="password"
+            type={showConfirmPassword ? 'text' : 'password'}
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -98,6 +114,18 @@ function ResetPassword() {
               outline: 'none',
             }}
           />
+          <span onClick={() => setShowConfirmPassword((prev) => !prev)}
+            style={{
+              position: 'absolute',
+              top: '42%',
+              right: '37%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              fontSize: '18px'
+            }}
+          >
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
           {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
         </div>
 
