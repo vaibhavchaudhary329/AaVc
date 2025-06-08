@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { FaEyeSlash, FaEye } from 'react-icons/fa'
 
 function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+   const [showConfirmPassword, setShowConfirmPassword] = useState('');
   const [error, setError] = useState('');
+
 
   const navigate = useNavigate();
 
@@ -18,7 +22,7 @@ function Signup() {
     }
     else if (password == confirmPassword) {
       try {
-        const response = await axios.post('http://localhost:8080/user/register', { username, email ,password, confirmPassword });
+        const response = await axios.post('http://localhost:8080/user/register', { username, email, password, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {
@@ -79,7 +83,7 @@ function Signup() {
 
         <div style={{ marginBottom: '15px' }}>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -92,11 +96,24 @@ function Signup() {
               outline: 'none',
             }}
           />
+
+          <span onClick={() => setShowPassword((prev) => !prev)}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              right: '37%',
+              transform: 'translateY(-50%)',
+              cursor:'pointer',
+              fontSize:'18px'
+            }}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
 
         <div style={{ marginBottom: '20px' }}>
           <input
-            type="password"
+            type={showConfirmPassword ? 'text' : 'password'}
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -109,6 +126,18 @@ function Signup() {
               outline: 'none',
             }}
           />
+           <span onClick={() => setShowConfirmPassword((prev) => !prev)}
+            style={{
+              position: 'absolute',
+              top: '58%',
+              right: '37%',
+              transform: 'translateY(-50%)',
+              cursor:'pointer',
+              fontSize:'18px'
+            }}
+          >
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
           {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
         </div>
 
@@ -117,7 +146,7 @@ function Signup() {
           style={{
             width: '100%',
             padding: '10px',
-            margin:'10px',
+            margin: '10px',
             backgroundColor: '#1E3A8A',
             color: 'white',
             border: 'none',
@@ -128,18 +157,18 @@ function Signup() {
         >
           Sign Up
         </button>
-        <button onClick={() => navigate('/signin')}  style={{
-            width: '100%',
-            padding: '10px',
-            margin:'10px',
-            backgroundColor: '#1E3A8A',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontWeight: 'bold',
-          }}>
-        Existing User? 
+        <button onClick={() => navigate('/signin')} style={{
+          width: '100%',
+          padding: '10px',
+          margin: '10px',
+          backgroundColor: '#1E3A8A',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          fontWeight: 'bold',
+        }}>
+          Existing User?
         </button>
       </form>
     </div>
