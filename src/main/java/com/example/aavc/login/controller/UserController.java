@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "https://aavc.netlify.app")
+@CrossOrigin(origins = "${FRONTEND_CORS}")
 @RestController
 @RequestMapping("/user")
 public class UserController {
