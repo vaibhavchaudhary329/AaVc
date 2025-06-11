@@ -1,6 +1,7 @@
 package com.example.aavc.login.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,12 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Value("${app.frontend.reset-url}")
+    private String resetBaseUrl;
+
     public void sendResetLink(String to,String token){
         String subject= "Password reset link";
-        String resetUrl= "http://localhost:3000/auth/reset-password?token=" + token;
+        String resetUrl = resetBaseUrl + "?token=" + token;
         String text= "Click the link below to reset you password\n" +resetUrl;
 
         SimpleMailMessage message= new SimpleMailMessage();
