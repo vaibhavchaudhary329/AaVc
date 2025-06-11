@@ -3,6 +3,8 @@ import axios from 'axios';
 import { FaCircle } from 'react-icons/fa'; // User avatar icon
 import './Home.css'; // Import your custom CSS
 import { useNavigate } from 'react-router-dom';
+import { getHome } from '../../api/api'
+
 
 function Home() {
     const [message, setMessage] = useState('');
@@ -29,7 +31,7 @@ function Home() {
     };
 
     useEffect(() => {
-        axios.get('https://aavc.onrender.com/user/home')
+        getHome()
             .then(response => { setMessage(response.data) })
             .catch(error => {
                 console.log("Error is:", error);

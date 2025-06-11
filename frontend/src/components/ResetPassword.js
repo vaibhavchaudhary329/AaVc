@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
-
+import { resetPassword } from '../api/api'
 
 function ResetPassword() {
 
@@ -25,7 +25,7 @@ function ResetPassword() {
     }
     else if (newPassword == confirmPassword) {
       try {
-        const response = await axios.post('https://aavc.onrender.com/auth/reset-password', { token, newPassword, confirmPassword });
+        const response = await resetPassword({ token, newPassword, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {

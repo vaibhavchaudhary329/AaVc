@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { forgetPassword } from '../api/api'
 
 function ForgetPassword() {
     const [email, setEmail] = useState('');
@@ -10,9 +10,8 @@ function ForgetPassword() {
 
     const handleForgetPassword = async (e) => {
         e.preventDefault();
-
         try {
-            const response = await axios.post('https://aavc.onrender.com/auth/forgot-password', { email });
+            const response = await forgetPassword({ email });
             alert(response.data);
         } catch (error) {
             console.error("Error is", error);
