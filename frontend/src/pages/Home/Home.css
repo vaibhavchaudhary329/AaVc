@@ -1,0 +1,49 @@
+.home-container {
+  position: relative;
+  padding: 20px;
+  text-align: center;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  left: 95%;
+}
+
+.avatar-circle {
+  color: #4a90e2; /* Blue circle */
+  font-size: 40px;
+}
+
+.avatar-initials {
+  position: absolute;
+  top: 10px;
+  left: 9px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.dropdown {
+  position: absolute;
+  top: 60px;
+  left: 92%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100px;
+  z-index: 10;
+}
+
+.dropdown div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown div:hover {
+  background-color: #f0f0f0;
+}
