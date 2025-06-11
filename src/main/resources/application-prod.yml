@@ -2,9 +2,9 @@ spring:
   application:
     name: login
   datasource:
-    url: jdbc:postgresql://dpg-d0smrhidbo4c73f871n0-a.oregon-postgres.render.com:5432/login_0fm2
-    username: login_0fm2_user
-    password: 5X8TN66MGPY2lYFhmEm6W3KT2I5s1Pls
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
