@@ -77,13 +77,7 @@ function ResetPassword() {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #1E3A8A',
-              outline: 'none',
-            }}
+            minLength={8}
           />
           <span onClick={() => setShowNewPassword((prev) => !prev)}
             style={{
@@ -106,13 +100,7 @@ function ResetPassword() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #1E3A8A',
-              outline: 'none',
-            }}
+            minLength={8}
           />
           <span onClick={() => setShowConfirmPassword((prev) => !prev)}
             style={{

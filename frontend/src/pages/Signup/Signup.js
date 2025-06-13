@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
-import {signupUser} from '../../api/api'
+import { signupUser } from '../../api/api'
 
 function Signup() {
   const [username, setUsername] = useState('');
@@ -63,6 +63,7 @@ function Signup() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            minLength={8}
           />
 
           <span onClick={() => setShowPassword((prev) => !prev)}>
@@ -78,6 +79,7 @@ function Signup() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            minLength={8}
           />
           <span onClick={() => setShowConfirmPassword((prev) => !prev)}>
             {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
@@ -85,8 +87,9 @@ function Signup() {
         </div>
         {/* Phone */}
         <div style={{ marginBottom: '15px', position: 'relative' }}>
-          <input type="text" placeholder="Phone" value={phone}
-            onChange={(e) => setPhone(e.target.value)} required />
+          <input type="tel" placeholder="Phone" value={phone}
+            onChange={(e) => setPhone(e.target.value)} required pattern="[0-9]{10}" maxLength={10}
+          />
         </div>
 
         {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}

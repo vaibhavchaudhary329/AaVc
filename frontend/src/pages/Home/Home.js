@@ -8,6 +8,7 @@ import { getHome } from '../../api/api'
 
 function Home() {
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
     const navigate = useNavigate();
@@ -31,12 +32,17 @@ function Home() {
     };
 
     useEffect(() => {
-        getHome()
-            .then(response => { setMessage(response.data) })
-            .catch(error => {
-                console.log("Error is:", error);
-                setMessage('Error in GET');
-            })
+        const fetchData = async () => {
+            try {
+                const response = await getHome();
+                setMessage(response); // since getHome() returns response.data directly
+            } catch (error) {
+                console.error("Error is", error);
+                setError('Error fetching home data');
+            }
+        };
+
+        fetchData();
     }, []);
 
     useEffect(() => {

@@ -35,7 +35,7 @@ public class AuthController {
             );
             return ResponseEntity.ok("Login Successful");
         } catch (BadCredentialsException badCredentialsException) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("InvalidCredential");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credential");
         }
     }
 }
