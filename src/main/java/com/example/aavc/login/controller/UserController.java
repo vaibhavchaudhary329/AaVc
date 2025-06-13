@@ -49,22 +49,21 @@ public class UserController {
         return ResponseEntity.ok("User registered successfully");
     }
     // GET /users/{id}
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        return userRepository.findById(id)
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUser(@PathVariable String username) {
+        return userRepository.findByUsername(username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     // PUT /users/{id}
-    @PutMapping("/{id}")
+    @PutMapping("/{username}")
     public ResponseEntity<String> updateUser(
-            @PathVariable Long id,
+            @PathVariable String username,
             @RequestBody User updatedUser) {
 
-        return userRepository.findById(id).map(user -> {
+        return userRepository.findByUsername(username).map(user -> {
             user.setFullName(updatedUser.getFullName());
-            user.setUsername(updatedUser.getUsername());
             user.setEmail(updatedUser.getEmail());
             user.setMobile(updatedUser.getMobile());
             userRepository.save(user);
