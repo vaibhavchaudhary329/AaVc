@@ -1,12 +1,14 @@
 import axios from 'axios';
 import constants from '../config/constanst';
 
-export const signupUser = async ({ username, email, password, confirmPassword }) => {
+export const signupUser = async ({ fullName, mobile, username, email, password, confirmPassword, }) => {
   const response = await axios.post(`${constants.API_URL}/user/register`, {
+    fullName,
+    mobile,
     username,
     email,
     password,
-    confirmPassword,
+    confirmPassword
   });
   return response;
 };
@@ -45,3 +47,11 @@ export const getHome = async () => {
   }
 };
 
+export const getUserDetails = async () => {
+  try {
+    const response = await axios.get(`${constants.API_URL}/user/1`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

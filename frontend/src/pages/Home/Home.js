@@ -27,6 +27,7 @@ function Home() {
         navigate('/edituser');
     };
     const handleLogout = () => {
+        localStorage.removeItem("userinfo");
         navigate('/signin');
         setShowDropdown(false);
     };

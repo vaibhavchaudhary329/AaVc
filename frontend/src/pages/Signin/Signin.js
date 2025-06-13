@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { signinUser } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
@@ -9,12 +9,22 @@ function Signin() {
     const [showPassword, setShowPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const userInfo = localStorage.getItem("userinfo");
+        if (userInfo) {
+            console.log("already logged in");
+            navigate("/home");
+        }
+    }, []);
+
     const handleSignin = async (e) => {
         e.preventDefault();
 
         try {
             const response = await signinUser({ identifier, password });
             alert(response.data);
+            localStorage.setItem("userinfo", identifier);
             navigate('/home');
         } catch (error) {
             console.error("Error is", error);
@@ -24,6 +34,8 @@ function Signin() {
         console.log('Email:', identifier);
         console.log('Password:', password);
     };
+
+
 
     return (
         <div className="container">

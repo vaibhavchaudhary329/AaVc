@@ -4,10 +4,10 @@ import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { signupUser } from '../../api/api'
 
 function Signup() {
+  const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -24,7 +24,7 @@ function Signup() {
     }
     else if (password === confirmPassword) {
       try {
-        const response = await signupUser({ username, email, password, confirmPassword });
+        const response = await signupUser({ mobile, fullName, username, email, password, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {
@@ -39,8 +39,8 @@ function Signup() {
       <form onSubmit={handleSignup}>
         {/* Name */}
         <div style={{ marginBottom: '15px' }}>
-          <input type="text" placeholder="Name" value={name}
-            onChange={(e) => setName(e.target.value)} required />
+          <input type="text" placeholder="Full Name" value={fullName}
+            onChange={(e) => setFullName(e.target.value)} required />
         </div>
 
         {/* Username */}
@@ -87,8 +87,8 @@ function Signup() {
         </div>
         {/* Phone */}
         <div style={{ marginBottom: '15px', position: 'relative' }}>
-          <input type="tel" placeholder="Phone" value={phone}
-            onChange={(e) => setPhone(e.target.value)} required pattern="[0-9]{10}" maxLength={10}
+          <input type="tel" placeholder="Phone" value={mobile}
+            onChange={(e) => setMobile(e.target.value)} required pattern="[0-9]{10}" maxLength={10}
           />
         </div>
 
