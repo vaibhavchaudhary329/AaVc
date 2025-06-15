@@ -50,7 +50,7 @@ public class UserController {
     }
     // GET /users/{id}
     @GetMapping("/{username}")
-    public ResponseEntity<User> getUser(@PathVariable String username) {
+    public ResponseEntity<User> getUser(@PathVariable("username") String username) {
         return userRepository.findByUsername(username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -59,7 +59,7 @@ public class UserController {
     // PUT /users/{id}
     @PutMapping("/{username}")
     public ResponseEntity<String> updateUser(
-            @PathVariable String username,
+            @PathVariable("username") String username,
             @RequestBody User updatedUser) {
 
         return userRepository.findByUsername(username).map(user -> {

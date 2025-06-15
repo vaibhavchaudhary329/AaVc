@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { resetPassword } from '../api/api'
 
@@ -9,7 +8,7 @@ function ResetPassword() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   console.log("Token:", token);
-  const [email, setEmail] = useState('');
+  //const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,7 +22,7 @@ function ResetPassword() {
     if (newPassword !== confirmPassword) {
       setError("Passwords do not match");
     }
-    else if (newPassword == confirmPassword) {
+    else if (newPassword === confirmPassword) {
       try {
         const response = await resetPassword({ token, newPassword, confirmPassword });
         alert(response.data);

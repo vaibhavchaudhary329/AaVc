@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { signinUser } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
@@ -9,8 +9,11 @@ function Signin() {
     const [showPassword, setShowPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const hasRun = useRef(false);
 
     useEffect(() => {
+        if (hasRun.current) return;
+        hasRun.current = true;
         const userInfo = localStorage.getItem("userinfo");
         if (userInfo) {
             console.log("already logged in");
@@ -20,7 +23,6 @@ function Signin() {
 
     const handleSignin = async (e) => {
         e.preventDefault();
-
         try {
             const response = await signinUser({ identifier, password });
             alert(response.data);
@@ -31,7 +33,7 @@ function Signin() {
             setError(error.response?.data || "Signin failed");
         }
         // TODO: send this data to backend
-        console.log('Email:', identifier);
+        console.log('Identifier:', identifier);
         console.log('Password:', password);
     };
 
