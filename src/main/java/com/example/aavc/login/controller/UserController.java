@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import java.util.Optional;
 
 @CrossOrigin(origins = "${FRONTEND_CORS}")
 @RestController
@@ -33,8 +33,9 @@ public class UserController {
         }
 
         if (userRepository.findByUsername(request.getUsername()).isPresent()
-                || userRepository.findByEmail(request.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("Username or Email already exists");
+                || userRepository.findByEmail(request.getEmail()).isPresent() ||
+                userRepository.findByMobile(request.getMobile()).isPresent()) {
+            return ResponseEntity.badRequest().body("Username or Email or mobile already exists");
         }
 
         User user = new User();
@@ -49,25 +50,55 @@ public class UserController {
         return ResponseEntity.ok("User registered successfully");
     }
     // GET /users/{id}
-    @GetMapping("/{username}")
-    public ResponseEntity<User> getUser(@PathVariable String username) {
-        return userRepository.findByUsername(username)
+    @GetMapping("/{identifier}")
+    public ResponseEntity<User> getUser(@PathVariable String identifier) {
+        return findUserByAnyIdentifier(identifier)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     // PUT /users/{id}
-    @PutMapping("/{username}")
+    @PutMapping("/{identifier}")
     public ResponseEntity<String> updateUser(
-            @PathVariable String username,
+            @PathVariable String identifier,
             @RequestBody User updatedUser) {
 
-        return userRepository.findByUsername(username).map(user -> {
+        return findUserByAnyIdentifier(identifier).map(user -> {
             user.setFullName(updatedUser.getFullName());
             user.setEmail(updatedUser.getEmail());
             user.setMobile(updatedUser.getMobile());
             userRepository.save(user);
             return ResponseEntity.ok("User updated successfully");
         }).orElse(ResponseEntity.notFound().build());
+    }
+    private Optional<User> findUserByAnyIdentifier(String identifier) {
+        if (identifier == null || identifier.trim().isEmpty()) {
+            return Optional.empty();
+        }
+
+        // 1. Check if it's an email
+        if (identifier.contains("@")) {
+            return userRepository.findByEmail(identifier.toLowerCase());
+        }
+
+        // 2. Check if it's a valid mobile number
+        if (isTenDigitNumber(identifier)) {
+            return userRepository.findByMobile(identifier);
+        }
+
+        // 3. Otherwise, treat it as a username
+        return userRepository.findByUsername(identifier);
+    }
+    private boolean isTenDigitNumber(String s) {
+        if (s == null || s.length() != 10) {
+            return false;
+        }
+        // Check if all characters are digits
+        for (char c : s.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
