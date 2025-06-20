@@ -45,7 +45,7 @@ public class AuthController {
         }
     }
 
-    /*@GetMapping("/google/success")
+    @GetMapping("/google/success")
     public ResponseEntity<?> success(OAuth2AuthenticationToken authentication) {
         Map<String, Object> details = authentication.getPrincipal().getAttributes();
 
@@ -71,6 +71,5 @@ public class AuthController {
                 "name", user.getFullName()
 
         ));
-    }*/
-
+    }
 }
