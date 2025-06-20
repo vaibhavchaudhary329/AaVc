@@ -12,15 +12,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 996128408853-jpm0meppt5r98rk61ri0dr8j73dlumj6.apps.googleusercontent.com
-            client-secret: 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
-            scope: email, profile
-            redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
+
+
+
+
+
+
+
   mail:
     host: smtp.gmail.com
     port: 587
