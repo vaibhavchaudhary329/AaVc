@@ -58,6 +58,20 @@ function Signin() {
                 <button onClick={() => navigate('/forgetpassword')} >
                     Forget Password
                 </button>
+                  <button
+                        type="button"
+                        onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google"}
+                        style={{
+                            backgroundColor: '#4285F4',
+                            color: 'white',
+                            border: 'none',
+                            padding: '10px 20px',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Login with Google
+                    </button>
             </form>
         </div>
     );

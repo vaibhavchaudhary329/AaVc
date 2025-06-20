@@ -31,12 +31,15 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/user/register", "/user/home","/user/{username}","/error").permitAll()
+                        .requestMatchers("/auth/**", "/", "/oauth2/**", "/user/register", "/user/home","/user/{username}","/error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
-                .authenticationProvider(authenticationProvider());
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/auth/login") // optional custom login
+                        .defaultSuccessUrl("/auth/google/success", true))
+                        .authenticationProvider(authenticationProvider());
 
         return http.build();
     }

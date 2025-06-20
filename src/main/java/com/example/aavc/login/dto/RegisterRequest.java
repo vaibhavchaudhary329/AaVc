@@ -32,7 +32,5 @@ public class RegisterRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
+    public void setConfirmPassword(String confirmPassword) {this.confirmPassword = confirmPassword;}
 }
