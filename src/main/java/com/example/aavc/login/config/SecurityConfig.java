@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -23,6 +24,11 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Autowired
+    private JwtAuthFilter jwtAuthFilter;
+    @Autowired
+    private JwtAuthEntryPoint jwtAuthEntryPoint;
+
     @Value("${app.cors.allowed-origin}")
     private String allowedOrigin;
 
@@ -30,17 +36,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/", "/oauth2/**", "/user/register", "/user/home","/user/{username}","/error").permitAll()
+                        .requestMatchers("/auth/**","/oauth2/**", "/user/register", "/user/home","/error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/user/**").authenticated()
                         .anyRequest().authenticated()
-                )
-                .oauth2Login(oauth -> oauth
-                        .loginPage("/auth/login") // optional custom login
-                        .defaultSuccessUrl("/auth/google/success", true))
-                        .authenticationProvider(authenticationProvider());
-
+                ).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
