@@ -38,7 +38,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**","/auth/**","/oauth2/**", "/user/register", "/user/home","/error").permitAll()
+                        .requestMatchers("/public/**","/auth/**","/oauth2/**", "/user/register",
+                                "/user/home","user/change-password","/error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").authenticated()
                         .anyRequest().authenticated())

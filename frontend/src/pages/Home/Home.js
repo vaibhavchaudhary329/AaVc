@@ -37,6 +37,13 @@ function Home() {
     console.log("[Home] Component rendered."); // Debugging log
 
     useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/signin");
+      }
+    }, [navigate]);
+
+    useEffect(() => {
         console.log("[Home] useEffect for getHome() triggered."); // Debugging log
         getHome()
             .then(response => {
