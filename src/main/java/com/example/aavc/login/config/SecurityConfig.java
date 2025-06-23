@@ -38,11 +38,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**","/oauth2/**", "/user/register", "/user/home","/error").permitAll()
+                        .requestMatchers("/public/**","/auth/**","/oauth2/**", "/user/register", "/user/home","/error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").authenticated()
-                        .anyRequest().authenticated()
-                ).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                        .anyRequest().authenticated())
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/auth/login")
+                        .defaultSuccessUrl("/auth/oauth2-success", true))
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

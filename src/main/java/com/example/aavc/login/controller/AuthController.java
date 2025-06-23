@@ -4,11 +4,14 @@ import com.example.aavc.login.dto.LoginRequest;
 import com.example.aavc.login.entity.User;
 import com.example.aavc.login.repository.UserRepository;
 import com.example.aavc.login.service.JwtService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.*;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -55,6 +58,24 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+    }
+    @GetMapping("/oauth2-success")
+    public void oauthSuccess(HttpServletResponse response, OAuth2AuthenticationToken authentication) throws IOException {
+        Map<String, Object> attributes = authentication.getPrincipal().getAttributes();
+
+        String email = (String) attributes.get("email");
+        String name = (String) attributes.get("name");
+
+        // Save new user if not already in DB
+        User user = userRepository.findByEmail(email).orElseGet(() -> {
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setFullName(name);
+            return userRepository.save(newUser);
+        });
+
+        String token = jwtService.generateToken(user);
+        response.sendRedirect("http://localhost:3000/oauth2-redirect?token=" + token);
     }
 
     // ♻️ Shared identifier lookup logic

@@ -1,47 +1,73 @@
+// src/api/api.js (or wherever your api.js is located)
 import axios from 'axios';
-import constants from '../config/constanst';
+import constants from '../config/constanst'; // Make sure this path is correct
 
-export const signupUser = async ({ username, email, password, confirmPassword }) => {
-  const response = await axios.post(`${constants.API_URL}/user/register`, {
-    username,
-    email,
-    password,
-    confirmPassword,
-  });
+// Create an Axios instance with the base URL
+const api = axios.create({
+  baseURL: constants.API_URL, // Ensure constants.API_URL is correctly defined (e.g., http://localhost:8080)
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Request interceptor to add the JWT token from localStorage to outgoing requests
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor to handle 401 Unauthorized errors globally
+// If a protected API call returns 401, it will clear the token and redirect to signin.
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      console.warn("[API Interceptor] Unauthorized request. Token might be expired or invalid. Redirecting to signin.");
+      localStorage.removeItem('token'); // Clear the invalid token
+      // Using window.location.href to force a full page reload and navigation
+      window.location.href = '/signin';
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Export functions that use THIS 'api' instance
+export const signupUser = async (data) => {
+  const response = await api.post('/user/register', data); // Use 'api.post'
   return response;
 };
 
-export const signinUser = async ({ identifier, password }) => {
-  const response = await axios.post(`${constants.API_URL}/auth/login`, {
-    identifier,
-    password,
-  });
+export const signinUser = async (data) => {
+  const response = await api.post('/auth/login', data); // Use 'api.post'
   return response;
 };
 
-export const forgetPassword = async ({ email }) => {
-  const response = await axios.post(`${constants.API_URL}/auth/forgot-password`, {
-    email,
-  });
+export const forgetPassword = async (data) => {
+  const response = await api.post('/auth/forgot-password', data); // Use 'api.post'
   return response;
 };
 
-
-export const resetPassword = async ({ token, newPassword, confirmPassword }) => {
-  const response = await axios.post(`${constants.API_URL}/auth/reset-password`, {
-    token,
-    newPassword,
-    confirmPassword,
-  });
+export const resetPassword = async (data) => {
+  const response = await api.post('/auth/reset-password', data); // Use 'api.post'
   return response;
 };
 
 export const getHome = async () => {
   try {
-    const response = await axios.get(`${constants.API_URL}/user/home`);
-    return response.data;
+    const response = await api.get('/user/home'); // <-- CRITICAL: NOW USES 'api.get'
+    return response.data; // Ensure your backend returns the raw string "Welcome User!" or similar
   } catch (error) {
     throw error;
   }
 };
 
+// If you need to export the configured 'api' instance for other uses
+// export default api;
