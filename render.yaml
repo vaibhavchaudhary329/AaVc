@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: springboot-login-api
+    env: java
+    buildCommand: ./gradlew build
+    startCommand: java -jar build/libs/login-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+    plan: free
+
+  # React frontend (Static Site)
+  - type: static
+    name: aavc-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/build
+    plan: free
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://springboot-login-api.onrender.com

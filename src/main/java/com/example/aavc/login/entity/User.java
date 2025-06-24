@@ -11,6 +11,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String loginProvider;
     @Column(unique = true)
     private String mobile;
     @Column(unique = true)
@@ -26,6 +27,7 @@ public class User {
     private LocalDateTime tokenExpiry;
 
     //Getter
+    public String getLoginProvider() { return loginProvider; }
     public String getMobile(){ return mobile;}
     public String getEmail(){ return email;}
     public String getUsername(){ return username;}
@@ -36,6 +38,7 @@ public class User {
     public LocalDateTime getTokenExpiry(){ return tokenExpiry;}
 
     //Setter
+    public void setLoginProvider(String loginProvider) { this.loginProvider = loginProvider; }
     public void setMobile(String mobile){this.mobile=mobile;}
     public void setEmail(String email){this.email=email;}
     public void setUsername(String username){this.username=username;}
