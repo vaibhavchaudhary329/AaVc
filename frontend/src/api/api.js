@@ -85,13 +85,16 @@ export const getUserDetails = async ({ identifier }) => {
     throw error;
   }
 };
-// If you need to export the configured 'api' instance for other uses
-// export default api;
 
-export const updateUserDetails = async () => {
+export const updateUserDetails = async ({ identifier, fullName, email, mobile }) => {
+  console.log("hello", identifier, fullName, email, mobile);
   try {
-    const response = await api.get('/user/home'); // <-- CRITICAL: NOW USES 'api.get'
-    return response.data; // Ensure your backend returns the raw string "Welcome User!" or similar
+    const response = await api.put(`/user/${identifier}`, {
+      fullName,
+      email,
+      mobile
+    });
+    return response.data;
   } catch (error) {
     throw error;
   }

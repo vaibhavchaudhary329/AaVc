@@ -63,7 +63,7 @@ public class UserController {
     // PUT /users/{id}
     @PutMapping("/{identifier}")
     public ResponseEntity<String> updateUser(
-            @PathVariable String identifier,
+            @PathVariable("identifier") String identifier,
             @RequestBody User updatedUser) {
 
         return findUserByAnyIdentifier(identifier).map(user -> {

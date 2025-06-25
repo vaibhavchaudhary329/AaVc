@@ -1,5 +1,5 @@
 package com.example.aavc.login.config;
-
+import org.springframework.security.config.Customizer;
 import com.example.aavc.login.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,11 +35,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**","/auth/**","/oauth2/**", "/user/register",
-                                "/user/home","user/change-password","/error").permitAll()
+                        .requestMatchers("/public/**", "/auth/**", "/oauth2/**", "/user/register",
+                                "/user/home", "user/change-password", "/error")
+                        .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").authenticated()
                         .anyRequest().authenticated())

@@ -18,15 +18,15 @@ function EditUser() {
   const navigate = useNavigate();
   const handleEditUser = async (e) => {
     e.preventDefault();
-    const username = localStorage.getItem("userinfo")
+    const identifier = localStorage.getItem("userinfo")
     try {
-      const response = await updateUserDetails({ username, fullName:userFullName, email:userEmail, mobile:userMobile });
+      const response = await updateUserDetails({ identifier, fullName:userFullName, email:userEmail, mobile:userMobile });
        console.log("H1:", response);
       alert(response);
       navigate('/home');
     } catch (error) {
       console.error("Error is", error);
-      setError(error.response?.data || "Update failed");
+      setError(error?.response?.data || "Update failed");
     }
 
     // if (password !== confirmPassword) {
