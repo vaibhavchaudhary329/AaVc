@@ -25,8 +25,10 @@ function Signin() {
         e.preventDefault();
         try {
             const response = await signinUser({ identifier, password });
-            alert(response.data);
+            console.log("After succful signin ",response.data.token);
+            alert("User Successfully signin");
             localStorage.setItem("userinfo", identifier);
+            localStorage.setItem("token", response.data.token);
             navigate('/home');
         } catch (error) {
             console.error("Error is", error);
@@ -60,8 +62,9 @@ function Signin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            //minLength={8}
           />
-          <span onClick={() => setShowPassword((prev) => !prev)} style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '8px' }}>
+          <span onClick={() => setShowPassword((prev) => !prev)} >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>

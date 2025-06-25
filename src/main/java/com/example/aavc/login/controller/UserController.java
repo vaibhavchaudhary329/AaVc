@@ -54,7 +54,7 @@ public class UserController {
     }
     // GET /users/{id}
     @GetMapping("/{identifier}")
-    public ResponseEntity<User> getUser(@PathVariable String identifier) {
+    public ResponseEntity<User> getUser(@PathVariable("identifier") String identifier) {
         return findUserByAnyIdentifier(identifier)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

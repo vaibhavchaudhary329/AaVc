@@ -14,6 +14,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
+    console.log("Token form API.JS",token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -69,5 +70,29 @@ export const getHome = async () => {
   }
 };
 
+// export const getUserDetails = async ({ identifier }) => {
+//   const response = await axios.get(`${constants.API_URL}/user/${identifier}`);
+//   return response.data;
+// };
+
+export const getUserDetails = async ({ identifier }) => {
+  try {
+    const response = await api.get(`/user/${identifier}`);
+    console.log("RES:",response);
+    return response.data;
+  } catch (error) {
+    console.log("ERR:",error);
+    throw error;
+  }
+};
 // If you need to export the configured 'api' instance for other uses
 // export default api;
+
+export const updateUserDetails = async () => {
+  try {
+    const response = await api.get('/user/home'); // <-- CRITICAL: NOW USES 'api.get'
+    return response.data; // Ensure your backend returns the raw string "Welcome User!" or similar
+  } catch (error) {
+    throw error;
+  }
+};
