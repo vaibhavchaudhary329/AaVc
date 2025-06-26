@@ -19,7 +19,7 @@ function Home() {
     const toggleDropdown = () => setShowDropdown(prev => !prev);
     const handleEdit = () => {
         setShowDropdown(false);
-        navigate('/edituser', { state: { fullName: userData.fullName, email: userData.email, mobile: userData.mobile } });
+        navigate('/edituser', { state: { editType: 'profile', fullName: userData.fullName, email: userData.email, mobile: userData.mobile } });
     };
     const handleLogout = () => {
         // Clear token from localStorage on logout
@@ -28,6 +28,11 @@ function Home() {
         navigate('/signin');
         setShowDropdown(false);
     };
+
+    const handlePasswordChange = () => {
+        setShowDropdown(false);
+        navigate('/edituser',{state: { editType: 'password'}});
+    }
 
     console.log("[Home] Component rendered."); // Debugging log
 
@@ -89,7 +94,8 @@ function Home() {
 
             {showDropdown && (
                 <div className="dropdown">
-                    <div onClick={handleEdit}>Edit</div>
+                    <div onClick={handleEdit}>Profile</div>
+                    <div onClick={handlePasswordChange}>Change Password</div>
                     <div onClick={handleLogout}>Logout</div>
                 </div>
             )}

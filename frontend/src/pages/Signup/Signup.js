@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { signupUser } from '../../api/api'
@@ -15,6 +15,18 @@ function Signup() {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+  // const hasRun = useRef(false);
+
+  // useEffect(() => {
+  //   if (hasRun.current) return;
+  //   hasRun.current = true;
+  //   const userInfo = localStorage.getItem("userinfo");
+  //   if (userInfo) {
+  //     console.log("already logged in");
+  //     navigate("/home");
+  //   }
+  // }, []);
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
@@ -24,7 +36,7 @@ function Signup() {
     }
     else if (password === confirmPassword) {
       try {
-        const response = await signupUser({ fullName, mobile , username, email, password, confirmPassword });
+        const response = await signupUser({ fullName, mobile, username, email, password, confirmPassword });
         alert(response.data);
         navigate('/signin');
       } catch (error) {

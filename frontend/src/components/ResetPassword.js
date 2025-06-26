@@ -29,26 +29,15 @@ function ResetPassword() {
         navigate('/signin');
       } catch (error) {
         console.error("Error is", error);
-        setError('Error');
+        setError(error.response?.data);
       }
       console.log("Data", token, newPassword, confirmPassword);
     }
   };
 
   return (
-    <div
-      style={{
-        maxWidth: '350px',
-        margin: '100px auto',
-        textAlign: 'center',
-        fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#f0f8ff',
-        padding: '30px',
-        borderRadius: '10px',
-        boxShadow: '0 4px 12px rgba(0, 0, 255, 0.1)'
-      }}
-    >
-      <h2 style={{ color: '#1E3A8A', marginBottom: '20px' }}>Reset Password</h2>
+    <div className="container" >
+      <h2 >Reset Password</h2>
       <form onSubmit={handleSubmit}>
 
         {/* 
@@ -69,7 +58,7 @@ function ResetPassword() {
           />
         </div> */}
 
-        <div style={{ marginBottom: '15px' }}>
+        <div style={{ marginBottom: '15px', position: 'relative' }}>
           <input
             type={showNewPassword ? 'text' : 'password'}
             placeholder="Password"
@@ -78,21 +67,12 @@ function ResetPassword() {
             required
             minLength={8}
           />
-          <span onClick={() => setShowNewPassword((prev) => !prev)}
-            style={{
-              position: 'absolute',
-              top: '34%',
-              right: '37%',
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-              fontSize: '18px'
-            }}
-          >
+          <span onClick={() => setShowNewPassword((prev) => !prev)}>
             {showNewPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '15px', position: 'relative' }}>
           <input
             type={showConfirmPassword ? 'text' : 'password'}
             placeholder="Confirm Password"
@@ -101,37 +81,14 @@ function ResetPassword() {
             required
             minLength={8}
           />
-          <span onClick={() => setShowConfirmPassword((prev) => !prev)}
-            style={{
-              position: 'absolute',
-              top: '42%',
-              right: '37%',
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-              fontSize: '18px'
-            }}
-          >
+          <span onClick={() => setShowConfirmPassword((prev) => !prev)} >
             {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
-          {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
         </div>
 
-        <button
-          type="submit"
-          style={{
-            width: '100%',
-            padding: '10px',
-            margin: '10px',
-            backgroundColor: '#1E3A8A',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontWeight: 'bold',
-          }}
-        >
-          Submit
-        </button>
+        {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
+
+        <button type="submit"> Submit </button>
       </form>
     </div>
   );

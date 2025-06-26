@@ -70,10 +70,6 @@ export const getHome = async () => {
   }
 };
 
-// export const getUserDetails = async ({ identifier }) => {
-//   const response = await axios.get(`${constants.API_URL}/user/${identifier}`);
-//   return response.data;
-// };
 
 export const getUserDetails = async ({ identifier }) => {
   try {
@@ -94,6 +90,17 @@ export const updateUserDetails = async ({ identifier, fullName, email, mobile })
       email,
       mobile
     });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const changePassword = async (data) => {
+  console.log("from change pswd api", data);
+  try {
+    const response = await api.post(`/user/change-password`, data );
     return response.data;
   } catch (error) {
     throw error;

@@ -4,40 +4,41 @@ import { signinUser } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
 function Signin() {
-    const [identifier, setIdentifier] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
-    const hasRun = useRef(false);
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const hasRun = useRef(false);
 
-    useEffect(() => {
-        if (hasRun.current) return;
-        hasRun.current = true;
-        const userInfo = localStorage.getItem("userinfo");
-        if (userInfo) {
-            console.log("already logged in");
-            navigate("/home");
-        }
-    }, []);
+  useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+    const userInfo = localStorage.getItem("userinfo");
+    if (userInfo) {
+      console.log("already logged in");
+      navigate("/home");
+    }
+  }, []);
 
-    const handleSignin = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await signinUser({ identifier, password });
-            console.log("After succful signin ",response.data.token);
-            alert("User Successfully signin");
-            localStorage.setItem("userinfo", identifier);
-            localStorage.setItem("token", response.data.token);
-            navigate('/home');
-        } catch (error) {
-            console.error("Error is", error);
-            setError(error.response?.data || "Signin failed");
-        }
-        // TODO: send this data to backend
-        console.log('Identifier:', identifier);
-        console.log('Password:', password);
-    };
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await signinUser({ identifier, password });
+      console.log("After succful signin ", response.data.token);
+      alert("User Successfully signin");
+      localStorage.setItem("userinfo", identifier);
+      localStorage.setItem("token", response.data.token);
+      navigate('/home');
+    } catch (error) {
+      alert('hello');
+      console.error("Error is", error);
+      setError(error.response?.data || "Signin failed");
+    }
+    // TODO: send this data to backend
+    console.log('Identifier:', identifier);
+    console.log('Password:', password);
+  };
 
 
 
@@ -62,7 +63,7 @@ function Signin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            //minLength={8}
+          //minLength={8}
           />
           <span onClick={() => setShowPassword((prev) => !prev)} >
             {showPassword ? <FaEyeSlash /> : <FaEye />}

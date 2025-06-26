@@ -15,53 +15,27 @@ function ForgetPassword() {
             alert(response.data);
         } catch (error) {
             console.error("Error is", error);
-            setError('Error');
+            setError(error.response?.data);
         }
         // TODO: send this data to backend
         console.log('Email:', email);
     };
 
     return (
-        <div style={{
-            maxWidth: '350px',
-            margin: '100px auto',
-            textAlign: 'center',
-            fontFamily: 'Arial, sans-serif',
-            backgroundColor: '#f0f8ff',
-            padding: '30px',
-            borderRadius: '10px',
-            boxShadow: '0 4px 12px rgba(0, 0, 255, 0.1)'
-        }}>
+        <div className="container">
             <h2 style={{ color: '#1E3A8A', marginBottom: '20px' }}>Forget Password</h2>
             <form onSubmit={handleForgetPassword}>
-                <div style={{ marginBottom: '15px' }}>
+                <div style={{ marginBottom: '15px', position: 'relative' }}>
                     <input
                         type="text"
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        style={{
-                            width: '100%',
-                            padding: '10px',
-                            borderRadius: '5px',
-                            border: '1px solid #1E3A8A',
-                            outline: 'none',
-                        }}
                     />
                 </div>
                 {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
-                <button type="submit" style={{
-                    width: '100%',
-                    padding: '10px',
-                    margin: '10px',
-                    backgroundColor: '#1E3A8A',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
-                }}>Reset Password</button>
+                <button type="submit" >Reset Password</button>
             </form>
         </div>
     );
