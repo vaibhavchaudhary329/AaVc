@@ -4,6 +4,9 @@ spring:
   application:
     name: login
   datasource:
+    url: jdbc:postgresql://dpg-d1lvo77fte5s73e0hflg-a.oregon-postgres.render.com:5432/postgres_login
+    username: postgres_login_user
+    password: 5Y1STzHkVz2u2jhSh8olf71qElRlF9r3
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
