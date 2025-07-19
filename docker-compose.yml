@@ -25,7 +25,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_login_user:5Y1STzHkVz2u2jhSh8olf71qElRlF9r3@dpg-d1lvo77fte5s73e0hflg-a.oregon-postgres.render.com:5432/postgres_login
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-d1lvo77fte5s73e0hflg-a.oregon-postgres.render.com:5432/postgres_login
       SPRING_DATASOURCE_USERNAME: postgres_login_user
       SPRING_DATASOURCE_PASSWORD: 5Y1STzHkVz2u2jhSh8olf71qElRlF9r3
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
