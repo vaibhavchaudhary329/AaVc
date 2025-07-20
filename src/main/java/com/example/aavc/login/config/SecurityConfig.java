@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthEntryPoint jwtAuthEntryPoint;
 
-    @Value("${app.cors.allowed-origin}")
+    @Value("https://aavc.netlify.app")
     private String allowedOrigin;
 
     @Bean
