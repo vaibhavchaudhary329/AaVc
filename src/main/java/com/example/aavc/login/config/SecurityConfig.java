@@ -21,8 +21,10 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
     private CustomUserDetailsService userDetailsService;
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
