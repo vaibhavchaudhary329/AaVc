@@ -94,7 +94,7 @@ function EditUser() {
 
 
               {/* Password */}
-              <div style={{ marginBottom: '15px', position: 'relative' }}>
+              {/* <div style={{ marginBottom: '15px', position: 'relative' }}>
                 <input type={showPassword ? 'text' : 'password'} placeholder="Password"
                   value={password} onChange={(e) => setPassword(e.target.value)} required
                 />
@@ -102,7 +102,7 @@ function EditUser() {
                 <span onClick={() => setShowPassword((prev) => !prev)}>
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </span>
-              </div>
+              </div> */}
 
               {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
               <button type="submit">Update</button>

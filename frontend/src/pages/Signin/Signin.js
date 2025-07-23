@@ -31,7 +31,6 @@ function Signin() {
       localStorage.setItem("token", response.data.token);
       navigate('/home');
     } catch (error) {
-      alert('hello');
       console.error("Error is", error);
       setError(error.response?.data || "Signin failed");
     }
