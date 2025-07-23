@@ -85,7 +85,7 @@ function Signin() {
         <button
           type="button"
           onClick={() => {
-            window.location.assign("http://localhost:8080/oauth2/authorization/google");
+            window.location.assign("https://aavc.onrender.com/oauth2/authorization/google");
           }}
           style={{
             marginTop: '20px',
