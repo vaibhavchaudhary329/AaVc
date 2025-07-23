@@ -75,7 +75,7 @@ public class AuthController {
         });
 
         String token = jwtService.generateToken(user);
-        response.sendRedirect("http://localhost:3000/oauth2-redirect?token=" + token);
+        response.sendRedirect("https://aavc.netlify.app/oauth2-redirect?token=" + token);
     }
 
     // ♻️ Shared identifier lookup logic
