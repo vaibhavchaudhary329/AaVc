@@ -13,6 +13,7 @@ function ForgetPassword() {
         try {
             const response = await forgetPassword({ email });
             alert(response.data);
+            navigate('/signin');
         } catch (error) {
             console.error("Error is", error);
             setError(error.response?.data);

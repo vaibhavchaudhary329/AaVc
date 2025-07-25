@@ -28,15 +28,15 @@ function EditUser() {
     console.log("P: ", password, userEmail);
     e.preventDefault();
     const identifier = localStorage.getItem("userinfo")
-    // try {
-    //   const response = await updateUserDetails({ identifier, fullName: userFullName, email: userEmail, mobile: userMobile });
-    //   console.log("H1:", response);
-    //   alert(response);
-    //   navigate('/home');
-    // } catch (error) {
-    //   console.error("Error is", error);
-    //   setError(error?.response?.data || "Update failed");
-    // }
+    try {
+      const response = await updateUserDetails({ identifier, fullName: userFullName, email: userEmail, mobile: userMobile });
+      console.log("H1:", response);
+      alert(response);
+      navigate('/home');
+    } catch (error) {
+      console.error("Error is", error);
+      setError(error?.response?.data || "Update failed");
+    }
 
   }
 
@@ -48,7 +48,7 @@ function EditUser() {
       try {
         const response = await changePassword({ oldPassword, newPassword, confirmPassword: confirmNewPassword });
         console.log("Response: ", response);
-        navigate('/home');
+        navigate('/signin');
       } catch (error) {
         console.error("Error: ", error);
         setError(error?.response?.data || "Update failed");
