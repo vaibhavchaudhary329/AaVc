@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
@@ -17,24 +19,39 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User oauthUser = super.loadUser(userRequest);
+        OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        String email = oauthUser.getAttribute("email");
-        String username = oauthUser.getAttribute("name"); // You may use a different attribute
+        String email = oAuth2User.getAttribute("email");
+        String name = oAuth2User.getAttribute("name");
 
-        boolean userExistsByEmail = userRepository.existsByEmail(email);
-        boolean userExistsByUsername = userRepository.existsByUsername(username);
-
-        if (!userExistsByEmail && !userExistsByUsername) {
-            User newUser = new User();
-            newUser.setEmail(email);
-            newUser.setUsername(username);
-            newUser.setFullName(oauthUser.getAttribute("name"));
-            newUser.setLoginProvider("GOOGLE");
-
-            userRepository.save(newUser);
+        // If email not found, abort login
+        if (email == null || name == null) {
+            throw new OAuth2AuthenticationException("Email or Name not present in OAuth2 response");
         }
 
-        return oauthUser;
+        // Check for existing user
+        Optional<User> existing = userRepository.findByEmail(email);
+        if (existing.isEmpty()) {
+            User user = new User();
+            user.setEmail(email);
+            user.setFullName(name);
+            user.setUsername(generateUniqueUsername(name)); // e.g., name converted to lowercase
+            user.setLoginProvider("GOOGLE");
+            userRepository.save(user);
+        }
+
+        return oAuth2User;
+    }
+
+    private String generateUniqueUsername(String baseName) {
+        String username = baseName.trim().toLowerCase().replaceAll(" ", "_");
+        String temp = username;
+        int count = 1;
+
+        while (userRepository.existsByUsername(temp)) {
+            temp = username + count;
+            count++;
+        }
+        return temp;
     }
 }
