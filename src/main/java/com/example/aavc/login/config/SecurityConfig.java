@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public/**", "/auth/**", "/oauth2/**", "/user/register",
-                                "/user/home", "/user/change-password", "/error")
+                                "/user/home", "/user/change-password","/login/**", "/error")
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").authenticated()
