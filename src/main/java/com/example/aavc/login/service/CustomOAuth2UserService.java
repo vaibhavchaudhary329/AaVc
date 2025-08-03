@@ -1,5 +1,6 @@
 package com.example.aavc.login.service;
 
+import com.example.aavc.login.config.CustomOAuth2User;
 import com.example.aavc.login.entity.User;
 import com.example.aavc.login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userRepository.save(user);
         }
 
-        return oAuth2User;
+        return new CustomOAuth2User(oAuth2User);
     }
 
     private String generateUniqueUsername(String baseName) {
