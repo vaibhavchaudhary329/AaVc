@@ -12,7 +12,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${app.frontend.reset-url}")
+    @Value("https://aavc.netlify.app/auth/reset-password")
     private String resetBaseUrl;
 
     public void sendResetLink(String to,String token){
