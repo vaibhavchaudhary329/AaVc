@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-@CrossOrigin(origins = "https://aavc.netlify.app")
+@CrossOrigin(origins = "${APP_CORS_ALLOWED_ORIGIN}")
 @RestController
 @RequestMapping("/auth")
 public class ForgotPasswordController {

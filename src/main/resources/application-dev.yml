@@ -1,19 +1,48 @@
 spring:
   application:
     name: login
+  config:
+    import: optional:file:.env.local[.properties]
+
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
   jpa:
-     hibernate:
+    hibernate:
       ddl-auto: update
-     show-sql: true
-     properties:
-          hibernate:
-           dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID}
+            client-secret: ${SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET}
+            scope: openid, email, profile
+            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
+            provider:
+              google: # This references the Google provider details (endpoints etc.)
+                issuer-uri: https://accounts.google.com
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 logging:
-    level:
-      org.springframework.security: DEBUG
+  level:
+    org.springframework.security: DEBUG

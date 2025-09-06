@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
-@CrossOrigin(origins = "https://aavc.netlify.app")
+@CrossOrigin(origins = "${APP_CORS_ALLOWED_ORIGIN}")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

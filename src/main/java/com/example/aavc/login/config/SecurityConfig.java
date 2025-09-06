@@ -42,7 +42,7 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthEntryPoint jwtAuthEntryPoint;
 
-    @Value("https://aavc.netlify.app")
+    @Value("${APP_FRONTEND_CONFIG_URL}")
     private String allowedOrigin;
 
     @Bean

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Optional;
 
-@CrossOrigin(origins = "https://aavc.netlify.app")
+@CrossOrigin(origins = "${APP_CORS_ALLOWED_ORIGIN}")
 @RestController
 @RequestMapping("/user")
 public class UserController {
