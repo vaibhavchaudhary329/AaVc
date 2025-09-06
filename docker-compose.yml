@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:14
+    image: postgres:17
     container_name: postgres
     ports:
       - "5432:5432"
@@ -25,9 +25,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-d1lvo77fte5s73e0hflg-a.oregon-postgres.render.com:5432/postgres_login
-      SPRING_DATASOURCE_USERNAME: postgres_login_user
-      SPRING_DATASOURCE_PASSWORD: 5Y1STzHkVz2u2jhSh8olf71qElRlF9r3
+      SPRING_DATASOURCE_URL: dbc:postgresql://dpg-d2u4ijvfte5s73aq813g-a.oregon-postgres.render.com:5432/render_postgres_login
+      SPRING_DATASOURCE_USERNAME: render_postgres_login_user
+      SPRING_DATASOURCE_PASSWORD: Xx5FKt9tisayJa3JBi4hpDm0eIzAKPSG
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "false"
       SPRING_PROFILES_ACTIVE: prod
