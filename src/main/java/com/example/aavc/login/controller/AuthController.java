@@ -69,14 +69,14 @@ public class AuthController {
 
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
-            response.sendRedirect("${SPRING_SECURITY_OAUTH2_CLIENT_FAILED}");
+            response.sendRedirect("https://aavc.netlify.app/oauth2-redirect?error=user_not_found");
             return;
         }
 
         User user = userOpt.get();
         String token = jwtService.generateToken(user);
 
-        response.sendRedirect("${SPRING_SECURITY_OAUTH2_CLIENT_SUCCESS}" + token);
+        response.sendRedirect("https://aavc.netlify.app/oauth2-redirect?token=" + token);
     }
 
     @GetMapping("/profile")
