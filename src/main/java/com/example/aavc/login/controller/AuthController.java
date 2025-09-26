@@ -66,17 +66,18 @@ public class AuthController {
     public void oauthSuccess(HttpServletResponse response, OAuth2AuthenticationToken authentication) throws IOException {
         Map<String, Object> attributes = authentication.getPrincipal().getAttributes();
         String email = (String) attributes.get("email");
+        System.out.println("Email: "+ email);
 
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
-            response.sendRedirect("https://aavc.netlify.app/oauth2-redirect?error=user_not_found");
+            response.sendRedirect("http://localhost:3000/oauth2-redirect?error=user_not_found");
             return;
         }
 
         User user = userOpt.get();
         String token = jwtService.generateToken(user);
 
-        response.sendRedirect("https://aavc.netlify.app/oauth2-redirect?token=" + token);
+        response.sendRedirect("http://localhost:3000/oauth2-redirect?token=" + token + "&email=" + email);
     }
 
     @GetMapping("/profile")

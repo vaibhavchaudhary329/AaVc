@@ -106,3 +106,13 @@ export const changePassword = async (data) => {
     throw error;
   }
 };
+
+
+export const getUserEmail = async () => {
+  try {
+    const response = await api.get('/auth/profile'); 
+    return response.data; 
+  } catch (error) {
+    throw error;
+  }
+};
