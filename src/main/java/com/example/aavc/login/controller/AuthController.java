@@ -68,16 +68,16 @@ public class AuthController {
         String email = (String) attributes.get("email");
         System.out.println("Email: "+ email);
 
-        Optional<User> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isEmpty()) {
-            response.sendRedirect("http://localhost:3000/oauth2-redirect?error=user_not_found");
-            return;
-        }
+        // Optional<User> userOpt = userRepository.findByEmail(email);
+        // if (userOpt.isEmpty()) {
+        //     response.sendRedirect("http://localhost:3000/oauth2-redirect?error=user_not_found");
+        //     return;
+        // }
 
-        User user = userOpt.get();
-        String token = jwtService.generateToken(user);
+        // User user = userOpt.get();
+        // String token = jwtService.generateToken(user);
 
-        response.sendRedirect("http://localhost:3000/oauth2-redirect?token=" + token + "&email=" + email);
+        response.sendRedirect("http://localhost:3000/oauth2-redirect?email=" + email);
     }
 
     @GetMapping("/profile")

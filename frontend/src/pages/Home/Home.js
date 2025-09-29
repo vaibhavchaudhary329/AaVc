@@ -15,7 +15,10 @@ function Home() {
     const [initials, setInitials] = useState('');
     const [userData, setUserData] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
-    const identifier = localStorage.getItem("userinfo");
+    let identifier = localStorage.getItem("userinfo");
+    if (!identifier) {
+        identifier = localStorage.getItem("googleuserid");
+    }
     const toggleDropdown = () => setShowDropdown(prev => !prev);
     const handleEdit = () => {
         setShowDropdown(false);
@@ -25,13 +28,14 @@ function Home() {
         // Clear token from localStorage on logout
         localStorage.removeItem('token');
         localStorage.removeItem('userinfo');
+        localStorage.removeItem('googleuserid');
         navigate('/signin');
         setShowDropdown(false);
     };
 
     const handlePasswordChange = () => {
         setShowDropdown(false);
-        navigate('/edituser',{state: { editType: 'password'}});
+        navigate('/edituser', { state: { editType: 'password' } });
     }
 
     console.log("[Home] Component rendered."); // Debugging log
@@ -47,11 +51,11 @@ function Home() {
         const fetchData = async () => {
             try {
                 const response = await getHome();
-                setMessage(response); // since getHome() returns response.data directly
                 setMessage(response);
+                navigate("/home");
             } catch (error) {
                 console.error("Error is", error);
-                setError('Error fetching home data');
+                setError('Error in User Home API');
             }
         };
 
@@ -66,11 +70,17 @@ function Home() {
 
             } catch (error) {
                 console.error("Error is", error);
-                setError('Error fetching home data');
+                setError('Error in fetching user data');
             }
         };
-        fetchUserData();
-        fetchData();
+
+        if (identifier) {
+            fetchUserData();
+            fetchData();
+        }
+        else {
+            setError("Identider is null");
+        }
     }, []);
 
     useEffect(() => {

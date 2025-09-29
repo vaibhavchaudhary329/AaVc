@@ -110,7 +110,7 @@ export const changePassword = async (data) => {
 
 export const getUserEmail = async () => {
   try {
-    const response = await api.get('/auth/profile'); 
+    const response = await api.get('/auth/oauth2-success'); 
     return response.data; 
   } catch (error) {
     throw error;

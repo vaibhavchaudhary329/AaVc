@@ -149,6 +149,7 @@ function EditUser() {
 
               {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
               <button type="submit">Change Password</button>
+              <button>Back</button>
             </form>
           </div>
         )
