@@ -1,49 +1,65 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signupUser } from '../api/api';
+import { signupUser, signinUser } from '../api/api';
 
 function OauthRedirect() {
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
     const email = params.get("email");
-    const fullName = "Ayush";
-    const mobile = 1231231234;
-    const username = 'agrayush';
-    const password = 'qwertasdfg';
-    const confirmPassword = 'qwertasdfg';
+    const identifier = params.get("email");
+    const password = '12345678';
+    const fullName = params.get("fullname");;
+    const mobile = '0';
+    const username = email.split('@')[0];
+    const confirmPassword = '12345678';
 
-    const createGoogleProfile = async () => {
+
+    const loginGoogleProfile = async () => {
+      console.log("From OauthRedirect Signin Success before try: ",email, password, identifier);
       try {
-        const response = await signupUser({fullName, mobile, username, email, password, confirmPassword, mobile ,email});
-        console.log("From OauthRedirect Success: ", response);
-        setMessage(response);
+        const response = await signinUser({ identifier, password });
+        console.log("From OauthRedirect Signin Success: ", response);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("googleuserid", identifier);
+        navigate('/home');
       } catch (error) {
-        console.log("From OauthRedirect Error: ", error);
-        setError('Error while creating gprofile ');
+        console.log("Error from OauthRedirect", error.response.data);
+        alert("ERROR from Outh");
+        createGoogleProfile();
       }
     };
 
-    console.log("This is from OauthRedirect.js  token params email from URL:", token, params, email);
-
-    if (token == null) {
-      localStorage.setItem("token", token);
-      if (localStorage.getItem('googleuserid') == null) {
-        console.log("This is from OauthRedirect.js ");
-        localStorage.setItem("googleuserid", email);
-        createGoogleProfile();
-      } else{
-       // navigate("/home");
+    const createGoogleProfile = async () => {
+      try {
+        const response = await signupUser({ fullName, mobile, username, email, password, confirmPassword });
+        console.log("From OauthRedirect Success: ", response);
+        alert("S");
+      } catch (error) {
+        console.log("From OauthRedirect Error: ", error.response.data);
+        loginGoogleProfile();
       }
-    } else {
-      console.log("This is from OauthRedirect.js  No token found. Going back to /signin...");
-      //navigate("/signin");
-    }
-  }, [navigate]);
+    };
+
+    console.log("This is from OauthRedirect.js  token params email from URL:", token, email);
+    //createGoogleProfile();
+    loginGoogleProfile();
+    // if (token == null) {
+    //   localStorage.setItem("token", token);
+    //   if (localStorage.getItem('googleuserid') == null) {
+    //      console.log("This is from OauthRedirect.js ");
+    //     loginGoogleProfile();
+    //     localStorage.setItem("googleuserid", email);
+    //     createGoogleProfile();
+    //   }
+    //  navigate("/home");
+    // } else {
+    //   console.log("This is from OauthRedirect.js  No token found. Going back to /signin...");
+    //   navigate("/signin");
+    // }
+  },);
 
   return <div>Logging you in with Google...</div>;
 }

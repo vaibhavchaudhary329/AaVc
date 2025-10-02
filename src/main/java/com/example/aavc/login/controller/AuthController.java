@@ -66,7 +66,8 @@ public class AuthController {
     public void oauthSuccess(HttpServletResponse response, OAuth2AuthenticationToken authentication) throws IOException {
         Map<String, Object> attributes = authentication.getPrincipal().getAttributes();
         String email = (String) attributes.get("email");
-        System.out.println("Email: "+ email);
+        String fullname = (String) attributes.get("name");
+        System.out.println("Email: "+ email + attributes);
 
         // Optional<User> userOpt = userRepository.findByEmail(email);
         // if (userOpt.isEmpty()) {
@@ -77,7 +78,7 @@ public class AuthController {
         // User user = userOpt.get();
         // String token = jwtService.generateToken(user);
 
-        response.sendRedirect("http://localhost:3000/oauth2-redirect?email=" + email);
+        response.sendRedirect("http://localhost:3000/oauth2-redirect?email=" + email + "&fullname=" + fullname);
     }
 
     @GetMapping("/profile")

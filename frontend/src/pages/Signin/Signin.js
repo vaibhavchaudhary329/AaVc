@@ -7,14 +7,14 @@ function Signin() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState('');
-  const [error, setError] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
   const hasRun = useRef(false);
 
   useEffect(() => {
     if (hasRun.current) return;
     hasRun.current = true;
-    const userInfo = localStorage.getItem("userinfo");
+    const userInfo = localStorage.getItem("userinfo") || localStorage.getItem("googleuserid") ;
     if (userInfo) {
       console.log("already logged in");
       navigate("/home");
@@ -22,6 +22,7 @@ function Signin() {
   }, []);
 
   const handleSignin = async (e) => {
+    console.log("After succful signin ", identifier, password);
     e.preventDefault();
     try {
       const response = await signinUser({ identifier, password });
@@ -31,8 +32,10 @@ function Signin() {
       localStorage.setItem("token", response.data.token);
       navigate('/home');
     } catch (error) {
-      console.error("Error is", error);
-      setError(error.response?.data || "Signin failed");
+      console.log("Error is", error.response.data);
+      setErrorMsg("Signin failed");
+      alert("ERROR", errorMsg);
+      navigate('/signin');
     }
     // TODO: send this data to backend
     console.log('Identifier:', identifier);
@@ -69,8 +72,6 @@ function Signin() {
           </span>
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-
         <button type="submit">Sign In</button>
 
         <button type="button" onClick={() => navigate('/signup')}>
@@ -98,6 +99,8 @@ function Signin() {
         >
           Login with Google
         </button>
+
+        {errorMsg && (<p style={{ color: 'red' }}>{errorMsg}</p>)}
       </form>
     </div>
   );

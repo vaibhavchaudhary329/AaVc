@@ -47,7 +47,8 @@ export const signupUser = async (data) => {
 };
 
 export const signinUser = async (data) => {
-  const response = await api.post('/auth/login', data); // Use 'api.post'
+  console.log("Data: ",data)
+  const response = await api.post('/auth/login', data); 
   return response;
 };
 
