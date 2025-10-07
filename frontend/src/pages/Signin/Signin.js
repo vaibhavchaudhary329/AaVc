@@ -8,6 +8,7 @@ function Signin() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const hasRun = useRef(false);
 
@@ -15,8 +16,8 @@ function Signin() {
     if (hasRun.current) return;
     hasRun.current = true;
     const userInfo = localStorage.getItem("userinfo") || localStorage.getItem("googleuserid") ;
-    if (userInfo) {
-      console.log("already logged in");
+    if (userInfo && token ) {
+      console.log("already logged in",userInfo);
       navigate("/home");
     }
   }, []);
@@ -33,7 +34,7 @@ function Signin() {
       navigate('/home');
     } catch (error) {
       console.log("Error is", error.response.data);
-      setErrorMsg("Signin failed");
+      setErrorMsg("Signin failed", error.response.data);
       alert("ERROR", errorMsg);
       navigate('/signin');
     }

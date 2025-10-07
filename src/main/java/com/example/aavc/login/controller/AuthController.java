@@ -39,8 +39,7 @@ public class AuthController {
 
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(identifier, password)
-            );
+                    new UsernamePasswordAuthenticationToken(identifier, password));
 
             Optional<User> optionalUser = findUserByAnyIdentifier(identifier);
             if (optionalUser.isEmpty()) {
@@ -54,8 +53,7 @@ public class AuthController {
                     "token", token,
                     "name", user.getFullName(),
                     "email", user.getEmail(),
-                    "mobile", user.getMobile()
-            ));
+                    "mobile", user.getMobile()));
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
@@ -63,22 +61,25 @@ public class AuthController {
     }
 
     @GetMapping("/oauth2-success")
-    public void oauthSuccess(HttpServletResponse response, OAuth2AuthenticationToken authentication) throws IOException {
+    public void oauthSuccess(HttpServletResponse response, OAuth2AuthenticationToken authentication)
+            throws IOException {
         Map<String, Object> attributes = authentication.getPrincipal().getAttributes();
         String email = (String) attributes.get("email");
         String fullname = (String) attributes.get("name");
-        System.out.println("Email: "+ email + attributes);
+        System.out.println("Email: " + email + attributes);
 
-        // Optional<User> userOpt = userRepository.findByEmail(email);
-        // if (userOpt.isEmpty()) {
-        //     response.sendRedirect("http://localhost:3000/oauth2-redirect?error=user_not_found");
-        //     return;
-        // }
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            response.sendRedirect("http://localhost:3000/oauth2-redirect?&email=" + email + "&fullname=" + fullname);
 
-        // User user = userOpt.get();
-        // String token = jwtService.generateToken(user);
+            return;
+        }
 
-        response.sendRedirect("http://localhost:3000/oauth2-redirect?email=" + email + "&fullname=" + fullname);
+        User user = userOpt.get();
+        String token = jwtService.generateToken(user);
+
+        response.sendRedirect(
+                "http://localhost:3000/oauth2-redirect?token=" + token + "&email=" + email + "&fullname=" + fullname);
     }
 
     @GetMapping("/profile")

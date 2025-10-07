@@ -40,12 +40,12 @@ function Home() {
 
     console.log("[Home] Component rendered."); // Debugging log
 
-    // useEffect(() => {
-    //   const token = localStorage.getItem("token");
-    //   if (!token) {
-    //     navigate("/signin");
-    //   }
-    // }, [navigate]);
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/signin");
+      }
+    }, [navigate]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -69,8 +69,10 @@ function Home() {
                 console.log("RES: ", response);
 
             } catch (error) {
-                console.error("Error is", error);
+                console.error("Error is", error.response.data.message);
                 setError('Error in fetching user data');
+                alert("Error from home fetchuserdata ");
+                navigate('/home')
             }
         };
 

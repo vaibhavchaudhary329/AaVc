@@ -27,7 +27,7 @@ function EditUser() {
   const handleEditUser = async (e) => {
     console.log("P: ", password, userEmail);
     e.preventDefault();
-    const identifier = localStorage.getItem("userinfo")
+    const identifier = localStorage.getItem("userinfo") || localStorage.getItem('googleuserid')
     try {
       const response = await updateUserDetails({ identifier, fullName: userFullName, email: userEmail, mobile: userMobile });
       console.log("H1:", response);
@@ -106,6 +106,7 @@ function EditUser() {
 
               {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
               <button type="submit">Update</button>
+              <button type="button" onClick={() => navigate('/home')}>Cancel</button>
             </form>
           </div>
         )
@@ -149,7 +150,7 @@ function EditUser() {
 
               {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
               <button type="submit">Change Password</button>
-              <button>Back</button>
+              <button type="button" onClick={() => navigate('/home')}>Cancel</button>
             </form>
           </div>
         )
