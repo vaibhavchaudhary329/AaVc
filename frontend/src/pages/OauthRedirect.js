@@ -36,12 +36,12 @@ function OauthRedirect() {
 
     const createGoogleProfile = async () => {
       try {
-        alert("from success Oauth redirect createGoogleProfile");
+        // alert("from success Oauth redirect createGoogleProfile");
         const response = await signupUser({ fullName, mobile, username, email, password, confirmPassword });
         setTimeout(() => navigate('/home'), 300);
 
       } catch (error) {
-        alert("from error Oauth redirect createGoogleProfile");
+        // alert("from error Oauth redirect createGoogleProfile");
         console.log("From OauthRedirect Error: ", error.response.data);
         // setErrorMsg("Signin failed", error.response.data);
 

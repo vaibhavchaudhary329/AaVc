@@ -35,7 +35,7 @@ function Signin() {
     } catch (error) {
       console.log("Error is", error.response.data);
       setErrorMsg("Signin failed", error.response.data);
-      alert("ERROR", errorMsg);
+      // alert("ERROR", errorMsg);
       navigate('/signin');
     }
     // TODO: send this data to backend
@@ -86,7 +86,7 @@ function Signin() {
         <button
           type="button"
           onClick={() => {
-            window.location.assign("http://localhost:8080/oauth2/authorization/google");
+            window.location.assign(`${process.env.REACT_APP_API_URL}/oauth2/authorization/google`);
           }}
           style={{
             marginTop: '20px',

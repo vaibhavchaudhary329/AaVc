@@ -37,7 +37,7 @@ function Signup() {
     else if (password === confirmPassword) {
       try {
         const response = await signupUser({ fullName, mobile, username, email, password, confirmPassword });
-        alert(response.data);
+        // alert(response.data);
         navigate('/signin');
       } catch (error) {
         console.error("Error is", error);

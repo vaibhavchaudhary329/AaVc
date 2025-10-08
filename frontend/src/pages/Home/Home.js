@@ -71,7 +71,7 @@ function Home() {
             } catch (error) {
                 console.error("Error is", error.response.data.message);
                 setError('Error in fetching user data');
-                alert("Error from home fetchuserdata ");
+                // alert("Error from home fetchuserdata ");
                 navigate('/home')
             }
         };
