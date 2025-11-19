@@ -70,7 +70,7 @@ public class AuthController {
 
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
-            response.sendRedirect("https://aavc.netify.app/oauth2-redirect?&email=" + email + "&fullname=" + fullname);
+            response.sendRedirect("https://aavc.netlify.app/oauth2-redirect?&email=" + email + "&fullname=" + fullname);
 
             return;
         }
@@ -79,7 +79,7 @@ public class AuthController {
         String token = jwtService.generateToken(user);
 
         response.sendRedirect(
-                "https://aavc.netify.app/oauth2-redirect?token=" + token + "&email=" + email + "&fullname=" + fullname);
+                "https://aavc.netlify.app/oauth2-redirect?token=" + token + "&email=" + email + "&fullname=" + fullname);
     }
 
     @GetMapping("/profile")
