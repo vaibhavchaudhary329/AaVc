@@ -7,6 +7,7 @@ import Home from './pages/Home/Home';
 import ForgetPassword from './components/ForgetPasswrod';
 import ResetPassword from './components/ResetPassword';
 import EditUser from './components/EditUser';
+import Product from './pages/Product/product';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
+         <Route path="/product" element={<Product/>} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/oauth2-redirect" element={<OauthRedirect />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
