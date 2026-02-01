@@ -7,7 +7,7 @@ import Home from './pages/Home/Home';
 import ForgetPassword from './components/ForgetPasswrod';
 import ResetPassword from './components/ResetPassword';
 import EditUser from './components/EditUser';
-import Product from './pages/Product/product';
+import Product from './pages/Product/Product';
 
 function App() {
   return (

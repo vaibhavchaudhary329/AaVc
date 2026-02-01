@@ -72,6 +72,19 @@ export const getHome = async () => {
 };
 
 
+export const getProducts = async () => {
+  try {
+    const response = await api.get('/user/home'); // <-- CRITICAL: NOW USES 'api.get'
+    return response.data; // Ensure your backend returns the raw string "Welcome User!" or similar
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+
+
 export const getUserDetails = async ({ identifier }) => {
   try {
     const response = await api.get(`/user/${identifier}`);
