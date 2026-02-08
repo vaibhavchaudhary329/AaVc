@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Product.css";
 
 import { getProducts } from '../../api/api'; // Ensure this path is correct for your updated api.js
@@ -36,9 +36,13 @@ function Product() {
     const [maxPrice, setMaxPrice] = useState(1000);
     const [minRating, setMinRating] = useState(0);
 
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+
 
     useEffect(() => {
-        const fetchData = async () => {
+        console.log("Hu")
+        const fetchProducts = async () => {
             try {
                 const response = await getProducts();
                 setMessage(response);
@@ -48,8 +52,11 @@ function Product() {
                 setError('Error in User Home API');
             }
         };
+
+        fetchProducts();
     }, [])
 
+    
 
     const filteredProducts = products.filter(
         (p) =>
