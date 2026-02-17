@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
                 .build();
 
         productRepository.save(product);
-        return mapToResponse(product);
+        return mapToProductResponse(product);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
         product.setUpdatedAt(LocalDateTime.now());
 
         productRepository.save(product);
-        return mapToResponse(product);
+        return mapToProductResponse(product);
     }
 
     @Override
@@ -71,14 +72,14 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
-        return mapToResponse(product);
+        return mapToProductResponse(product);
     }
 
     @Override
     public List<ProductResponse> getAllProducts() {
         return productRepository.findByIsActiveTrue()
                 .stream()
-                .map(this::mapToResponse)
+                .map(this::mapToProductResponse)
                 .toList();
     }
 
@@ -86,16 +87,18 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductResponse> getProductsByCategory(Long categoryId) {
         return productRepository.findByCategoryIdAndIsActiveTrue(categoryId)
                 .stream()
-                .map(this::mapToResponse)
+                .map(this::mapToProductResponse)
                 .toList();
     }
 
     @Override
-    public List<ProductResponse> searchProducts(String keyword) {
-        return productRepository.findByNameContainingIgnoreCaseAndIsActiveTrue(keyword)
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
+    public List<ProductResponse> searchProducts(String q) {
+        // Calling the custom repository method that searches both fields
+        List<Product> products = productRepository.searchProducts(q);
+
+        return products.stream()
+                .map(this::mapToProductResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -107,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
-    private ProductResponse mapToResponse(Product product) {
+    private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
