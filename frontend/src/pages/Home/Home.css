@@ -48,3 +48,11 @@
 .dropdown div:hover {
   background-color: #f0f0f0;
 }
+
+
+.product-button {
+  position: absolute;
+  width: auto;
+  left: 0;
+  margin: 10px;
+}

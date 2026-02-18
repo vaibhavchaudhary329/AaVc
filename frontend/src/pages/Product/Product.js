@@ -1,51 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
 
-import { getProducts } from '../../api/api'; // Ensure this path is correct for your updated api.js
+import { getProducts, getCategories } from '../../api/api'; // Ensure this path is correct for your updated api.js
 
-
-const products = [
-    {
-        id: 1,
-        name: "Fresh Apple",
-        description: "Crisp & juicy red apples",
-        price: 120,
-        rating: 4.6,
-        image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce"
-    },
-    {
-        id: 2,
-        name: "Organic Banana",
-        description: "Naturally ripened bananas",
-        price: 60,
-        rating: 4.2,
-        image: "https://images.unsplash.com/photo-1574226516831-e1dff420e12b"
-    },
-    {
-        id: 3,
-        name: "Fresh Milk",
-        description: "1L full cream milk",
-        price: 55,
-        rating: 4.8,
-        image: "https://images.unsplash.com/photo-1585238342028-4bbc8c9ec43b"
-    }
-];
 
 function Product() {
     const [search, setSearch] = useState("");
     const [maxPrice, setMaxPrice] = useState(1000);
     const [minRating, setMinRating] = useState(0);
-
+    const [products, setProducts] = useState([]);
+     const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
 
     useEffect(() => {
-        console.log("Hu")
+        console.log("This is Product.js")
         const fetchProducts = async () => {
             try {
                 const response = await getProducts();
-                setMessage(response);
+                setProducts(response);
                 console.log("Products", response);
             } catch (error) {
                 console.error("Error is", error);
@@ -56,14 +30,31 @@ function Product() {
         fetchProducts();
     }, [])
 
-    
 
-    const filteredProducts = products.filter(
-        (p) =>
-            p.name.toLowerCase().includes(search.toLowerCase()) &&
-            p.price <= maxPrice &&
-            p.rating >= minRating
-    );
+    useEffect(() => {
+        console.log("This is Category Product.js")
+        const fetchCategories = async () => {
+            try {
+                const response = await getCategories();
+                setCategories(response);
+                console.log("Categories: ", response);
+            } catch (error) {
+                console.error("Error is", error);
+                setError('Error in User Home API');
+            }
+        };
+
+        fetchCategories();
+    }, [])
+
+
+
+    // const filteredProducts = products.filter(
+    //     (p) =>
+    //         p.name.toLowerCase().includes(search.toLowerCase()) &&
+    //         p.price <= maxPrice &&
+    //         p.rating >= minRating
+    // );
 
     return (
         <div className="app-container">
@@ -105,17 +96,29 @@ function Product() {
 
                 {/* Products */}
                 <section className="product-grid">
-                    {filteredProducts.map((p) => (
-                        <div className="product-card" key={p.id}>
-                            <img src={p.image} alt={p.name} />
-                            <div className="product-info">
-                                <h4>{p.name}</h4>
-                                <p className="desc">{p.description}</p>
-                                <div className="bottom">
-                                    <span className="price">₹{p.price}</span>
-                                    <span className="rating">⭐ {p.rating}</span>
-                                </div>
-                            </div>
+                    {/* {products.map((product) => (
+                        <div className="product-card" key={product.id}>
+                            <h3>{product.name}</h3>
+                            <p>{product.description}</p>
+                            <p>₹{product.price}</p>
+                            <p>Stock: {product.stock}</p>
+                            <img
+                                src={product.imageUrl}
+                                alt={product.name}
+                                style={{ width: "200px", height: "200px", objectFit: "cover" }}
+                            />
+                        </div>
+                    ))} */}
+
+                        {categories.map((product) => (
+                        <div className="product-card" key={product.id}>
+                            <h3>{product.name}</h3>
+                            <p>{product.description}</p>
+                            {/* <img
+                                src={product.imageUrl}
+                                alt={product.name}
+                                style={{ width: "200px", height: "200px", objectFit: "cover" }}
+                            /> */}
                         </div>
                     ))}
                 </section>

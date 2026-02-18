@@ -112,6 +112,7 @@ function Home() {
                 </div>
             )}
             <h2>{message} to AAVC HOME PAGE!!</h2>
+            <button type='button' className='product-button' onClick={() => navigate('/product')}>Products</button>
             {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
         </div>
     );

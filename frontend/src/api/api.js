@@ -74,7 +74,16 @@ export const getHome = async () => {
 
 export const getProducts = async () => {
   try {
-    const response = await api.get('/user/home'); // <-- CRITICAL: NOW USES 'api.get'
+    const response = await api.get('api/products'); // <-- CRITICAL: NOW USES 'api.get'
+    return response.data; // Ensure your backend returns the raw string "Welcome User!" or similar
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getCategories = async () => {
+  try {
+    const response = await api.get('api/categories'); // <-- CRITICAL: NOW USES 'api.get'
     return response.data; // Ensure your backend returns the raw string "Welcome User!" or similar
   } catch (error) {
     throw error;
