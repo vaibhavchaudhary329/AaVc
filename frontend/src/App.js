@@ -8,6 +8,8 @@ import ForgetPassword from './components/ForgetPasswrod';
 import ResetPassword from './components/ResetPassword';
 import EditUser from './components/EditUser';
 import Product from './pages/Product/Product';
+import Category from './pages/Product/Category';
+import ProductDetail from './pages/Product/ProductDetail';
 
 function App() {
   return (
@@ -16,12 +18,14 @@ function App() {
         <Route path="/" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
-         <Route path="/product" element={<Product/>} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/product/:categoryId" element={<Product />} />
+        <Route path="/productdetail" element={<ProductDetail />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/oauth2-redirect" element={<OauthRedirect />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/auth/reset-password" element={<ResetPassword />} />
-         <Route path="/edituser" element={<EditUser />} />
+        <Route path="/edituser" element={<EditUser />} />
 
       </Routes>
     </Router >

@@ -1,54 +1,87 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getProducts, getCategories, getProductByCategory, getSearch } from '../../api/api'; // Ensure this path is correct for your updated api.js
 
-function Product() {
-    const [search, setSearch] = useState("");
+
+function Category() {
+    const [isSearch, setIsSearch] = useState(false);
+    const [searchitem, setSearchItem] = useState("");
     const [maxPrice, setMaxPrice] = useState(1000);
     const [minRating, setMinRating] = useState(0);
-    const [products, setProducts] = useState([]);
-    // const [categories, setCategories] = useState([]);
+    const [searchedProduct, setSearchedProduct] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { categoryId } = useParams();
-    console.log("ID: ", categoryId)
 
-    const handleProductClick = (product) => {
-        console.log("P: ",product);
-        navigate(`/productdetail`, { state: { product } })
+
+    // useEffect(() => {
+    //     const fetchProducts = async () => {
+    //         try {
+    //             const response = await getProducts();
+    //             setProducts(response);
+    //         } catch (error) {
+    //             console.error("Error is", error);
+    //             setError('Error in User Home API');
+    //         }
+    //     };
+
+    //     fetchProducts();
+    // }, [])
+
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await getCategories();
+                setCategories(response);
+            } catch (error) {
+                console.error("Error is", error);
+                setError('Error in User Home API');
+            }
+        };
+
+        fetchCategories();
+    }, [])
+
+
+    // useEffect(() => {
+    //     const fetchProductByCategory = async () => {
+    //         try {
+    //             const response = await getProductByCategory();
+    //             // setCategories(response);
+    //             // console.log("Categories: Products ", response);
+    //         } catch (error) {
+    //             console.error("Error is", error);
+    //             setError('Error in User Home API');
+    //         }
+    //     };
+
+    //     fetchProductByCategory();
+    // }, [])
+
+
+    const searchProduct = async (searcheditem) => {
+        try {
+            const response = await getSearch(searcheditem);
+            setSearchedProduct(response);
+            console.log("Search: ", response);
+        } catch (error) {
+            console.error("Error is", error);
+            setError('Error in User Home API');
+        }
+    };
+
+    const handleCategoryClick = (categoryid) => {
+        navigate(`/product/${categoryid}`)
     }
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await getProducts();
-                // setProducts(response);
-            } catch (error) {
-                console.error("Error is", error);
-                setError('Error in User Home API');
-            }
-        };
-
-        fetchProducts();
-    }, [])
-
-
-    useEffect(() => {
-        const fetchProductByCategory = async () => {
-            try {
-                const response = await getProductByCategory(categoryId);
-                setProducts(response);
-                // console.log("Categories: Products ", response);
-            } catch (error) {
-                console.error("Error is", error);
-                setError('Error in User Home API');
-            }
-        };
-
-        fetchProductByCategory();
-    }, [])
+    const handleSearch = (searchitem) => {
+        setIsSearch(true)
+        searchProduct(searchitem);
+        console.log("Search clciked: ", searchitem )
+    }
 
     // const filteredProducts = products.filter(
     //     (p) =>
@@ -65,11 +98,10 @@ function Product() {
                 <input
                     type="text"
                     placeholder="Search for fruits, vegetables, dairy..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    value={searchitem}
+                    onChange={(e) => setSearchItem(e.target.value)}
                 />
-                <i className="ri-add-icon" ></i>
-                <button className="back" onClick={() => navigate('/category')}>Back</button>
+                <i className="ri-search-line searchicon" onClick={() => handleSearch(searchitem)} ></i>
             </header>
 
             <div className="main">
@@ -99,8 +131,20 @@ function Product() {
 
                 {/* Products */}
                 <section className="product-grid">
-                    {/* {products.map((product) => (
-                        <div className="product-card" key={product.id}>
+                    {!isSearch && categories.map((category) => (
+                        <div className="product-card" key={category.id} onClick={() => handleCategoryClick(category.id)}>
+                            <h3>{category.name}</h3>
+                            <p>{category.description}</p>
+                            {/* <img
+                                src={product.imageUrl}
+                                alt={product.name}
+                                style={{ width: "200px", height: "200px", objectFit: "cover" }}
+                            /> */}
+                        </div>
+                    ))}
+
+                    {isSearch && searchedProduct.map((product) => (
+                        <div className="product-card">
                             <h3>{product.name}</h3>
                             <p>{product.description}</p>
                             <p>₹{product.price}</p>
@@ -111,25 +155,11 @@ function Product() {
                                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
                             />
                         </div>
-                    ))} */}
-
-                    {products.map((product) => (
-                        <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
-                            <h3>{product.name}</h3>
-                            <p>{product.description}</p>
-                            {/* <img
-                                src={product.imageUrl}
-                                alt={product.name}
-                                style={{ width: "200px", height: "200px", objectFit: "cover" }}
-                            /> */}
-                        </div>
                     ))}
-
-
                 </section>
             </div>
         </div>
     );
 }
 
-export default Product;
+export default Category;

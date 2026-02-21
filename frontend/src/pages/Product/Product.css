@@ -22,6 +22,7 @@ body {
 .logo {
     color: blue;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .header input {
@@ -129,4 +130,13 @@ body {
 .rating {
     font-size: 14px;
     color: #f59e0b;
+}
+
+.back{
+    width: 5%;
+}
+
+.searchicon{
+    cursor: pointer;
+    font-size: 20px;
 }

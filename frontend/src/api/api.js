@@ -14,7 +14,6 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    console.log("Token form API.JS",token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -47,8 +46,8 @@ export const signupUser = async (data) => {
 };
 
 export const signinUser = async (data) => {
-  console.log("Data: ",data)
-  const response = await api.post('/auth/login', data); 
+  console.log("Data: ", data)
+  const response = await api.post('/auth/login', data);
   return response;
 };
 
@@ -91,22 +90,41 @@ export const getCategories = async () => {
 };
 
 
+export const getProductByCategory = async (categoryId) => {
+  try {
+    const response = await api.get(`api/products/category/${categoryId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const getSearch = async (query) => {
+  try {
+    const response = await api.get(`/api/products/search?q=${query}`); 
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 
 
 
 export const getUserDetails = async ({ identifier }) => {
   try {
     const response = await api.get(`/user/${identifier}`);
-    console.log("RES:",response);
+    console.log("RES:", response);
     return response.data;
   } catch (error) {
-    console.log("ERR:",error);
+    console.log("ERR:", error);
     throw error;
   }
 };
 
 export const updateUserDetails = async ({ identifier, fullName, email, mobile }) => {
-  console.log("hello", identifier, fullName, email, mobile);
   try {
     const response = await api.put(`/user/${identifier}`, {
       fullName,
@@ -123,7 +141,7 @@ export const updateUserDetails = async ({ identifier, fullName, email, mobile })
 export const changePassword = async (data) => {
   console.log("from change pswd api", data);
   try {
-    const response = await api.post(`/user/change-password`, data );
+    const response = await api.post(`/user/change-password`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -133,8 +151,8 @@ export const changePassword = async (data) => {
 
 export const getUserEmail = async () => {
   try {
-    const response = await api.get('/auth/oauth2-success'); 
-    return response.data; 
+    const response = await api.get('/auth/oauth2-success');
+    return response.data;
   } catch (error) {
     throw error;
   }

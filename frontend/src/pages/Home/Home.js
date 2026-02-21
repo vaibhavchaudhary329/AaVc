@@ -66,7 +66,6 @@ function Home() {
                 const generateInitials = fullName.split(" ").map(name => name[0]).join("").toUpperCase();
                 setInitials(generateInitials);
                 setUserData({ fullName: response.fullName, email: response.email, mobile: response.mobile });
-                console.log("RES: ", response);
 
             } catch (error) {
                 console.error("Error is", error.response.data.message);
@@ -112,7 +111,7 @@ function Home() {
                 </div>
             )}
             <h2>{message} to AAVC HOME PAGE!!</h2>
-            <button type='button' className='product-button' onClick={() => navigate('/product')}>Products</button>
+            <button type='button' className='product-button' onClick={() => navigate('/category')}>Category</button>
             {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
         </div>
     );

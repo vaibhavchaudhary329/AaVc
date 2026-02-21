@@ -31,12 +31,12 @@ public class ProductController {
     }
 
     @GetMapping("/category/{categoryId}")
-    public List<ProductResponse> getProductsByCategory(@PathVariable Long categoryId) {
+    public List<ProductResponse> getProductsByCategory(@PathVariable("categoryId") Long categoryId) {
         return productService.getProductsByCategory(categoryId);
     }
 
     @GetMapping("/search")
-    public List<ProductResponse> searchProducts(@RequestParam String q) {
+    public List<ProductResponse> searchProducts(@RequestParam("q") String q) {
         return productService.searchProducts(q);
     }
 
