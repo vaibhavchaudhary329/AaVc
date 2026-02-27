@@ -33,6 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = Category.builder()
                 .name(request.getName())
                 .description(request.getDescription())
+                .imageUrl(request.getImageUrl())
                 .build();
 
         Category savedCategory = categoryRepository.save(category);
@@ -45,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .id(category.getId())
                 .name(category.getName())
                 .description(category.getDescription())
+                .imageUrl(category.getImageUrl())
                 .build();
     }
 }
