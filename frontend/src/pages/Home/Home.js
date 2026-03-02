@@ -1,10 +1,9 @@
-// src/pages/Home/Home.js (or wherever your Home.js is located)
 import React, { useEffect, useState, useRef } from 'react';
-// Remove 'import axios from 'axios';' as you are now using the configured 'api'
-import { FaCircle } from 'react-icons/fa'; // User avatar icon
-import './Home.css'; // Import your custom CSS
+import './Home.css';
 import { useNavigate } from 'react-router-dom';
-import { getHome, getUserDetails } from '../../api/api'; // Ensure this path is correct for your updated api.js
+import Header from '../../components/Header';
+import { getHome, getUserDetails } from '../../api/api'; 
+import Category from '../Product/Category';
 
 function Home() {
     const [message, setMessage] = useState('');
@@ -87,8 +86,8 @@ function Home() {
     useEffect(() => {
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsMenuOpen(false); // Assuming setIsMenuOpen is related to a different menu
-                setShowDropdown(false); // Close the dropdown too
+                setIsMenuOpen(false); 
+                setShowDropdown(false); 
             }
         }
 
@@ -98,21 +97,11 @@ function Home() {
 
     return (
         <div className="home-container">
-            <div className="avatar-wrapper" onClick={toggleDropdown}>
-                <FaCircle className="avatar-circle" />
-                <span className="avatar-initials">{initials}</span>
-            </div>
-
-            {showDropdown && (
-                <div className="dropdown">
-                    <div onClick={handleEdit}>Profile</div>
-                    <div onClick={handlePasswordChange}>Change Password</div>
-                    <div onClick={handleLogout}>Logout</div>
-                </div>
-            )}
-            <h2>{message} to AAVC HOME PAGE!!</h2>
+        <Header></Header> 
+        <Category></Category>
+            {/* <h2>{message} to AAVC HOME PAGE!!</h2>
             <button type='button' className='product-button' onClick={() => navigate('/category')}>Category</button>
-            {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
+            {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>} */}
         </div>
     );
 }

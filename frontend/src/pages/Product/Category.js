@@ -74,13 +74,13 @@ function Category() {
     };
 
     const handleCategoryClick = (categoryid) => {
-        navigate(`/product/${categoryid}`)
+        navigate(`/home/product/${categoryid}`)
     }
 
     const handleSearch = (searchitem) => {
         setIsSearch(true)
         searchProduct(searchitem);
-        console.log("Search clciked: ", searchitem )
+        console.log("Search clciked: ", searchitem)
     }
 
     // const filteredProducts = products.filter(
@@ -93,7 +93,7 @@ function Category() {
     return (
         <div className="app-container">
             {/* Top Search Bar */}
-            <header className="header">
+            {/* <header className="header">
                 <h2 className="logo" onClick={() => navigate('/home')}>AAVC</h2>
                 <input
                     type="text"
@@ -102,7 +102,7 @@ function Category() {
                     onChange={(e) => setSearchItem(e.target.value)}
                 />
                 <i className="ri-search-line searchicon" onClick={() => handleSearch(searchitem)} ></i>
-            </header>
+            </header> */}
 
             <div className="main">
                 {/* Filters */}
@@ -133,13 +133,14 @@ function Category() {
                 <section className="product-grid">
                     {!isSearch && categories.map((category) => (
                         <div className="product-card" key={category.id} onClick={() => handleCategoryClick(category.id)}>
-                            <h3>{category.name}</h3>
-                            <p>{category.description}</p>
-                            {/* <img
-                                src={product.imageUrl}
-                                alt={product.name}
+
+                            {/* <p>{category.description}</p> */}
+                            <img
+                                src={category.imageUrl}
+                                alt={category.description}
                                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
-                            /> */}
+                            />
+                            <h3>{category.name}</h3>
                         </div>
                     ))}
 

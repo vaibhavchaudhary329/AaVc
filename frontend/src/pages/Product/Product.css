@@ -132,11 +132,14 @@ body {
     color: #f59e0b;
 }
 
-.back{
+.back {
     width: 5%;
 }
 
-.searchicon{
+.searchicon {
+    position: relative;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 25px;
+    margin: 10px;
+    left: -5%;
 }

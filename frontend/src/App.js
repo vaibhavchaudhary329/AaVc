@@ -19,8 +19,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/category" element={<Category />} />
-        <Route path="/product/:categoryId" element={<Product />} />
-        <Route path="/productdetail" element={<ProductDetail />} />
+        <Route path="/home/product/:categoryId" element={<Product />} />
+        <Route path="/home/productdetail" element={<ProductDetail />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/oauth2-redirect" element={<OauthRedirect />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />

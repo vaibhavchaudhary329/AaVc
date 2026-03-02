@@ -17,7 +17,7 @@ function Product() {
 
     const handleProductClick = (product) => {
         console.log("P: ",product);
-        navigate(`/productdetail`, { state: { product } })
+        navigate(`/home/productdetail`, { state: { product } })
     }
 
     useEffect(() => {
@@ -58,20 +58,7 @@ function Product() {
     // );
 
     return (
-        <div className="app-container">
-            {/* Top Search Bar */}
-            <header className="header">
-                <h2 className="logo" onClick={() => navigate('/home')}>AAVC</h2>
-                <input
-                    type="text"
-                    placeholder="Search for fruits, vegetables, dairy..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-                <i className="ri-add-icon" ></i>
-                <button className="back" onClick={() => navigate('/category')}>Back</button>
-            </header>
-
+        <div className="app-container">  
             <div className="main">
                 {/* Filters */}
                 <aside className="filters">
@@ -98,7 +85,7 @@ function Product() {
                 </aside>
 
                 {/* Products */}
-                <section className="product-grid">
+                <section className="productgrid">
                     {/* {products.map((product) => (
                         <div className="product-card" key={product.id}>
                             <h3>{product.name}</h3>
@@ -116,12 +103,12 @@ function Product() {
                     {products.map((product) => (
                         <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
                             <h3>{product.name}</h3>
-                            <p>{product.description}</p>
-                            {/* <img
+                            {/* <p>{product.description}</p> */}
+                            <img
                                 src={product.imageUrl}
                                 alt={product.name}
                                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
-                            /> */}
+                            />
                         </div>
                     ))}
 

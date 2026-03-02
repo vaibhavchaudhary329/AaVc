@@ -9,7 +9,6 @@ function ProductDetail() {
     const location = useLocation();
     const navigate = useNavigate();
     const product = location.state?.product;
-    console.log("Product", product)
     const [search, setSearch] = useState("");
     const [maxPrice, setMaxPrice] = useState(1000);
     const [minRating, setMinRating] = useState(0);
@@ -92,19 +91,6 @@ function ProductDetail() {
 
     return (
         <div className="app-container">
-            {/* Top Search Bar */}
-            <header className="header">
-                <h2 className="logo" onClick={() => navigate('/home')}>AAVC</h2>
-                <input
-                    type="text"
-                    placeholder="Search for fruits, vegetables, dairy..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-                <i className="ri-add-icon" ></i>
-                <button className="back" onClick={() => navigate('/category')}>Back</button>
-            </header>
-
             <div className="main">
                 {/* Filters */}
                 <aside className="filters">
