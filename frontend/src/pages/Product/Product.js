@@ -1,24 +1,42 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getProducts, getCategories, getProductByCategory, getSearch } from '../../api/api'; // Ensure this path is correct for your updated api.js
 
 function Product() {
-    const [search, setSearch] = useState("");
     const [maxPrice, setMaxPrice] = useState(1000);
     const [minRating, setMinRating] = useState(0);
+    const [searchedProduct, setSearchedProduct] = useState([]);
     const [products, setProducts] = useState([]);
-    // const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const query = queryParams.get("q");
     const { categoryId } = useParams();
-    console.log("ID: ", categoryId)
+    const [isSearch, setIsSearch] = useState(false);
+    const searchProduct = async (searcheditem) => {
+        try {
+            const response = await getSearch(searcheditem);
+            setSearchedProduct(response);
+            console.log("Search: ", response);
+        } catch (error) {
+            console.error("Error is", error);
+            setError('Error in User Home API');
+        }
+    };
 
     const handleProductClick = (product) => {
-        console.log("P: ",product);
         navigate(`/home/productdetail`, { state: { product } })
     }
+
+    useEffect(() => {
+        if (query) {
+            setIsSearch(true);
+            searchProduct(query)
+        }
+    })
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -30,7 +48,6 @@ function Product() {
                 setError('Error in User Home API');
             }
         };
-
         fetchProducts();
     }, [])
 
@@ -58,7 +75,7 @@ function Product() {
     // );
 
     return (
-        <div className="app-container">  
+        <div className="app-container">
             <div className="main">
                 {/* Filters */}
                 <aside className="filters">
@@ -85,22 +102,9 @@ function Product() {
                 </aside>
 
                 {/* Products */}
-                <section className="productgrid">
-                    {/* {products.map((product) => (
-                        <div className="product-card" key={product.id}>
-                            <h3>{product.name}</h3>
-                            <p>{product.description}</p>
-                            <p>₹{product.price}</p>
-                            <p>Stock: {product.stock}</p>
-                            <img
-                                src={product.imageUrl}
-                                alt={product.name}
-                                style={{ width: "200px", height: "200px", objectFit: "cover" }}
-                            />
-                        </div>
-                    ))} */}
 
-                    {products.map((product) => (
+                < section className="product-grid">
+                    {!isSearch && products.map((product) => (
                         <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
                             <h3>{product.name}</h3>
                             {/* <p>{product.description}</p> */}
@@ -109,11 +113,25 @@ function Product() {
                                 alt={product.name}
                                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
                             />
+                            <p>₹{product.price}</p>
+                            <p>Stock: {product.stock}</p>
                         </div>
                     ))}
 
-
+                    {isSearch && searchedProduct.map((product) => (
+                        <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
+                            <h3>{product.name}</h3>
+                            <img
+                                src={product.imageUrl}
+                                alt={product.name}
+                                style={{ width: "200px", height: "200px", objectFit: "cover" }}
+                            />
+                            <p>₹{product.price}</p>
+                            <p>Stock: {product.stock}</p>
+                        </div>
+                    ))}
                 </section>
+
             </div>
         </div>
     );

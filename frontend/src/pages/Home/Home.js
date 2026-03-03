@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
-import { getHome, getUserDetails } from '../../api/api'; 
+import { getHome, getUserDetails } from '../../api/api';
 import Category from '../Product/Category';
 
 function Home() {
@@ -23,14 +23,14 @@ function Home() {
         setShowDropdown(false);
         navigate('/edituser', { state: { editType: 'profile', fullName: userData.fullName, email: userData.email, mobile: userData.mobile } });
     };
-    const handleLogout = () => {
-        // Clear token from localStorage on logout
-        localStorage.removeItem('token');
-        localStorage.removeItem('userinfo');
-        localStorage.removeItem('googleuserid');
-        navigate('/signin');
-        setShowDropdown(false);
-    };
+    // const handleLogout = () => {
+    //     // Clear token from localStorage on logout
+    //     localStorage.removeItem('token');
+    //     localStorage.removeItem('userinfo');
+    //     localStorage.removeItem('googleuserid');
+    //     navigate('/signin');
+    //     setShowDropdown(false);
+    // };
 
     const handlePasswordChange = () => {
         setShowDropdown(false);
@@ -39,12 +39,12 @@ function Home() {
 
     console.log("[Home] Component rendered."); // Debugging log
 
-    useEffect(() => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/signin");
-      }
-    }, [navigate]);
+    // useEffect(() => {
+    //     const token = localStorage.getItem("token");
+    //     if (!token) {
+    //         navigate("/signin");
+    //     }
+    // }, [navigate]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -86,8 +86,8 @@ function Home() {
     useEffect(() => {
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsMenuOpen(false); 
-                setShowDropdown(false); 
+                setIsMenuOpen(false);
+                setShowDropdown(false);
             }
         }
 
@@ -97,11 +97,9 @@ function Home() {
 
     return (
         <div className="home-container">
-        <Header></Header> 
-        <Category></Category>
-            {/* <h2>{message} to AAVC HOME PAGE!!</h2>
-            <button type='button' className='product-button' onClick={() => navigate('/category')}>Category</button>
-            {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>} */}
+            {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
+            <Category></Category>
+
         </div>
     );
 }

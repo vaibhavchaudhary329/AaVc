@@ -5,8 +5,6 @@ import { getProducts, getCategories, getProductByCategory, getSearch } from '../
 
 
 function Category() {
-    const [isSearch, setIsSearch] = useState(false);
-    const [searchitem, setSearchItem] = useState("");
     const [maxPrice, setMaxPrice] = useState(1000);
     const [minRating, setMinRating] = useState(0);
     const [searchedProduct, setSearchedProduct] = useState([]);
@@ -77,12 +75,7 @@ function Category() {
         navigate(`/home/product/${categoryid}`)
     }
 
-    const handleSearch = (searchitem) => {
-        setIsSearch(true)
-        searchProduct(searchitem);
-        console.log("Search clciked: ", searchitem)
-    }
-
+   
     // const filteredProducts = products.filter(
     //     (p) =>
     //         p.name.toLowerCase().includes(search.toLowerCase()) &&
@@ -131,7 +124,7 @@ function Category() {
 
                 {/* Products */}
                 <section className="product-grid">
-                    {!isSearch && categories.map((category) => (
+                    {categories.map((category) => (
                         <div className="product-card" key={category.id} onClick={() => handleCategoryClick(category.id)}>
 
                             {/* <p>{category.description}</p> */}
@@ -141,20 +134,6 @@ function Category() {
                                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
                             />
                             <h3>{category.name}</h3>
-                        </div>
-                    ))}
-
-                    {isSearch && searchedProduct.map((product) => (
-                        <div className="product-card">
-                            <h3>{product.name}</h3>
-                            <p>{product.description}</p>
-                            <p>₹{product.price}</p>
-                            <p>Stock: {product.stock}</p>
-                            <img
-                                src={product.imageUrl}
-                                alt={product.name}
-                                style={{ width: "200px", height: "200px", objectFit: "cover" }}
-                            />
                         </div>
                     ))}
                 </section>

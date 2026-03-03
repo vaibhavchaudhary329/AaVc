@@ -33,7 +33,7 @@ api.interceptors.response.use(
       console.warn("[API Interceptor] Unauthorized request. Token might be expired or invalid. Redirecting to signin.");
       localStorage.removeItem('token'); // Clear the invalid token
       // Using window.location.href to force a full page reload and navigation
-      window.location.href = '/signin';
+      //window.location.href = '/signin';
     }
     return Promise.reject(error);
   }

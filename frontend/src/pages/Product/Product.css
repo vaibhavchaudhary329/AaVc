@@ -13,6 +13,7 @@ body {
 .header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 20px;
     padding: 16px 24px;
     background: #ffffff;
@@ -23,6 +24,7 @@ body {
     color: blue;
     font-weight: 700;
     cursor: pointer;
+    margin: 0px;
 }
 
 .header input {
@@ -142,4 +144,9 @@ body {
     font-size: 25px;
     margin: 10px;
     left: -5%;
+}
+
+.back-icon {
+  font-size: 22px;
+  cursor: pointer;
 }

@@ -12,9 +12,7 @@ function Header() {
     const [initials, setInitials] = useState('');
     const [userData, setUserData] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
-    const [isSearch, setIsSearch] = useState(false);
     const [searchitem, setSearchItem] = useState("");
-    const [searchedProduct, setSearchedProduct] = useState([]);
     const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -123,34 +121,17 @@ function Header() {
     //     fetchProductByCategory();
     // }, [])
 
-
-    const searchProduct = async (searcheditem) => {
-        try {
-            const response = await getSearch(searcheditem);
-            setSearchedProduct(response);
-            console.log("Search: ", response);
-        } catch (error) {
-            console.error("Error is", error);
-            setError('Error in User Home API');
-        }
-    };
-
     const handleSearch = (searchitem) => {
-        setIsSearch(true)
-        searchProduct(searchitem);
-        console.log("Search clciked: ", searchitem)
+        if (!searchitem.trim()) return;
+        navigate(`/home/search?q=${searchitem}`)
     }
-
-    // const filteredProducts = products.filter(
-    //     (p) =>
-    //         p.name.toLowerCase().includes(search.toLowerCase()) &&
-    //         p.price <= maxPrice &&
-    //         p.rating >= minRating
-    // );
 
     return (
         <div className="app-container">
             <header className="header">
+                <div>
+                    <i className="ri-arrow-left-line back-icon" onClick={() => navigate(-1)} ></i>
+                </div>
                 <div className="logo-header">
                     <h2 className="logo" onClick={() => navigate('/home')}>AAVC</h2>
                 </div>
@@ -160,6 +141,9 @@ function Header() {
                         placeholder="Search for fruits, vegetables, dairy..."
                         value={searchitem}
                         onChange={(e) => setSearchItem(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") handleSearch(searchitem);
+                        }}
                     />
                     <i className="ri-search-line searchicon" onClick={() => handleSearch(searchitem)} ></i>
                 </div>
