@@ -17,6 +17,8 @@ function ProductDetail() {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
+    console.log("P:", product);
+
 
     // useEffect(() => {
     //     const fetchProducts = async () => {
@@ -120,7 +122,11 @@ function ProductDetail() {
                 <section className="product-grid">
                     <div className="product-card">
                         <h3>{product.name}</h3>
-                        <p>{product.description}</p>
+                        <ul>
+                            {product.description.split("\\n").map((item, index) => (
+                                <li key={index}>{item}</li>
+                            ))}
+                        </ul>
                         <p>₹{product.price}</p>
                         <p>Stock: {product.stock}</p>
                         <img

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'
 import React from 'react';
 import Signup from './pages/Signup/Signup';
 import Signin from './pages/Signin/Signin';
@@ -15,22 +15,45 @@ import Header from './components/Header';
 function App() {
   return (
     <Router>
-      <Header />
+      <AppRoutes />
+    </Router>
+  );
+}
+
+
+function AppRoutes() {
+  const location = useLocation();
+
+  // Routes where header should NOT appear
+  const hideHeaderRoutes = [
+    "/",
+    "/signin",
+    "/signup",
+    "/forgetpassword",
+    "/auth/reset-password",
+    "/oauth2-redirect",
+    "/edituser"
+  ];
+
+  const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
+  return (
+    <>
+      {!shouldHideHeader && <Header />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/oauth2-redirect" element={<OauthRedirect />} />
+        <Route path="/forgetpassword" element={<ForgetPassword />} />
+        <Route path="/auth/reset-password" element={<ResetPassword />} />
+        <Route path="/edituser" element={<EditUser />} />
         <Route path="/home" element={<Home />} />
         <Route path="/category" element={<Category />} />
         <Route path="/home/product/:categoryId" element={<Product />} />
         <Route path="/home/search" element={<Product />} />
         <Route path="/home/productdetail" element={<ProductDetail />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/oauth2-redirect" element={<OauthRedirect />} />
-        <Route path="/forgetpassword" element={<ForgetPassword />} />
-        <Route path="/auth/reset-password" element={<ResetPassword />} />
-        <Route path="/edituser" element={<EditUser />} /> F
       </Routes>
-    </Router >
+    </>
   );
 }
 

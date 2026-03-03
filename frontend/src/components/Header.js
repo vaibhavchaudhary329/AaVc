@@ -147,7 +147,7 @@ function Header() {
                     />
                     <i className="ri-search-line searchicon" onClick={() => handleSearch(searchitem)} ></i>
                 </div>
-
+                <i className="ri-shopping-cart-2-line cart-icon"></i>
                 <div className="avatar-wrapper" onClick={toggleDropdown}>
                     <FaCircle className="avatar-circle" />
                     <span className="avatar-initials">{initials}</span>

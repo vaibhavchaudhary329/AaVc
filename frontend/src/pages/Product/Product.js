@@ -107,7 +107,6 @@ function Product() {
                     {!isSearch && products.map((product) => (
                         <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
                             <h3>{product.name}</h3>
-                            {/* <p>{product.description}</p> */}
                             <img
                                 src={product.imageUrl}
                                 alt={product.name}
