@@ -10,7 +10,7 @@ import EditUser from './components/EditUser';
 import Product from './pages/Product/Product';
 import Category from './pages/Product/Category';
 import ProductDetail from './pages/Product/ProductDetail';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 
 function App() {
   return (

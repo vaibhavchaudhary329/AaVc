@@ -6,7 +6,7 @@ import { getProducts, getCategories, getProductByCategory, getSearch } from '../
 function Product() {
     const [maxPrice, setMaxPrice] = useState(1000);
     const [minRating, setMinRating] = useState(0);
-    const [searchedProduct, setSearchedProduct] = useState([]);
+    // const [searchedProduct, setSearchedProduct] = useState([]);
     const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -19,7 +19,7 @@ function Product() {
     const searchProduct = async (searcheditem) => {
         try {
             const response = await getSearch(searcheditem);
-            setSearchedProduct(response);
+            setProducts(response);
             console.log("Search: ", response);
         } catch (error) {
             console.error("Error is", error);
@@ -28,13 +28,13 @@ function Product() {
     };
 
     const handleProductClick = (product) => {
-        navigate(`/home/productdetail`, { state: { product } })
+        navigate(`/home/productdetail`, { state: { product } });
     }
 
     useEffect(() => {
         if (query) {
             setIsSearch(true);
-            searchProduct(query)
+            searchProduct(query);
         }
     })
 
@@ -77,34 +77,9 @@ function Product() {
     return (
         <div className="app-container">
             <div className="main">
-                {/* Filters */}
-                <aside className="filters">
-                    <h3>Filters</h3>
-
-                    <div className="filter-group">
-                        <label>Max Price (₹)</label>
-                        <input
-                            type="number"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="filter-group">
-                        <label>Minimum Rating</label>
-                        <select onChange={(e) => setMinRating(e.target.value)}>
-                            <option value="0">All</option>
-                            <option value="3">3 ★ & above</option>
-                            <option value="4">4 ★ & above</option>
-                            <option value="4.5">4.5 ★ & above</option>
-                        </select>
-                    </div>
-                </aside>
-
-                {/* Products */}
-
                 < section className="product-grid">
-                    {!isSearch && products.map((product) => (
+                    {isSearch && <span>{"Showing Result for"} {query}  </span>}
+                    {products.map((product) => (
                         <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
                             <h3>{product.name}</h3>
                             <img
@@ -112,21 +87,8 @@ function Product() {
                                 alt={product.name}
                                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
                             />
-                            <p>₹{product.price}</p>
-                            <p>Stock: {product.stock}</p>
-                        </div>
-                    ))}
-
-                    {isSearch && searchedProduct.map((product) => (
-                        <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
-                            <h3>{product.name}</h3>
-                            <img
-                                src={product.imageUrl}
-                                alt={product.name}
-                                style={{ width: "200px", height: "200px", objectFit: "cover" }}
-                            />
-                            <p>₹{product.price}</p>
-                            <p>Stock: {product.stock}</p>
+                            <p className="price">₹{product.price}</p>
+                            <p className="rating">{product.stock !== 0 ? 'In Stock' : 'Out of Stock'}</p>
                         </div>
                     ))}
                 </section>

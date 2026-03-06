@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
+import Header from '../../components/Header/Header';
 import { getHome, getUserDetails } from '../../api/api';
 import Category from '../Product/Category';
 

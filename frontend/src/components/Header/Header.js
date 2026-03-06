@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { getProducts, getCategories, getProductByCategory, getSearch, getHome, getUserDetails } from '../api/api'; // Ensure this path is correct for your updated api.js
+import { getProducts, getCategories, getProductByCategory, getSearch, getHome, getUserDetails } from '../../api/api'; // Ensure this path is correct for your updated api.js
 import { FaCircle } from 'react-icons/fa'; // User avatar icon
-
+import "../Header/Header.css"
 
 function Header() {
     let identifier = localStorage.getItem("userinfo");
@@ -129,13 +129,16 @@ function Header() {
     return (
         <div className="app-container">
             <header className="header">
-                <div>
-                    <i className="ri-arrow-left-line back-icon" onClick={() => navigate(-1)} ></i>
-                </div>
                 <div className="logo-header">
                     <h2 className="logo" onClick={() => navigate('/home')}>AAVC</h2>
                 </div>
+                <div className="address">
+                    <span className="delivery-type">Pickup or Delivery</span>
+                    <span className="delivery-location">Mumbai</span>
+                </div>
                 <div className="input-search-header">
+                    <i className="ri-search-line searchicon" onClick={() => handleSearch(searchitem)} ></i>
+
                     <input
                         type="text"
                         placeholder="Search for fruits, vegetables, dairy..."
@@ -145,7 +148,6 @@ function Header() {
                             if (e.key === "Enter") handleSearch(searchitem);
                         }}
                     />
-                    <i className="ri-search-line searchicon" onClick={() => handleSearch(searchitem)} ></i>
                 </div>
                 <i className="ri-shopping-cart-2-line cart-icon"></i>
                 <div className="avatar-wrapper" onClick={toggleDropdown}>

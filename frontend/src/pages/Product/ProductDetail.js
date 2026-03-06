@@ -94,31 +94,6 @@ function ProductDetail() {
     return (
         <div className="app-container">
             <div className="main">
-                {/* Filters */}
-                <aside className="filters">
-                    <h3>Filters</h3>
-
-                    <div className="filter-group">
-                        <label>Max Price (₹)</label>
-                        <input
-                            type="number"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="filter-group">
-                        <label>Minimum Rating</label>
-                        <select onChange={(e) => setMinRating(e.target.value)}>
-                            <option value="0">All</option>
-                            <option value="3">3 ★ & above</option>
-                            <option value="4">4 ★ & above</option>
-                            <option value="4.5">4.5 ★ & above</option>
-                        </select>
-                    </div>
-                </aside>
-
-                {/* Products */}
                 <section className="product-grid">
                     <div className="product-card">
                         <h3>{product.name}</h3>
@@ -127,8 +102,8 @@ function ProductDetail() {
                                 <li key={index}>{item}</li>
                             ))}
                         </ul>
-                        <p>₹{product.price}</p>
-                        <p>Stock: {product.stock}</p>
+                        <p className="price">₹{product.price}</p>
+                       <p className="rating">{product.stock !==0 ? 'In Stock' : 'Out of Stock' }</p>
                         <img
                             src={product.imageUrl}
                             alt={product.name}

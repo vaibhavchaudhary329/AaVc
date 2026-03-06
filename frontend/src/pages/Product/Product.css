@@ -9,6 +9,10 @@ body {
     background-color: #f5f7fa;
 }
 
+.app-container {
+    width: 100%;
+}
+
 /* Header */
 .header {
     position: sticky;
@@ -32,7 +36,7 @@ body {
 
 .input-search-header {
     flex: 1;
-    max-width: 1000px;
+    max-width: 33%;
     margin: 0 20px;
     display: flex;
     align-items: center;
@@ -105,7 +109,7 @@ body {
 .product-card {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
     padding: 10px;
     background: #ffffff;
     border-radius: 14px;
@@ -168,19 +172,6 @@ body {
 .searchicon:hover {
     color: #4f46e5;
 }
-
-.back-icon {
-    font-size: 22px;
-    cursor: pointer;
-    padding: 6px;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-.back-icon:hover {
-    background-color: #f0f0f0;
-}
-
 
 .cart-icon {
     font-size: 22px;

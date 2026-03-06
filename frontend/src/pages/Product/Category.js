@@ -99,7 +99,7 @@ function Category() {
 
             <div className="main">
                 {/* Filters */}
-                <aside className="filters">
+                {/* <aside className="filters">
                     <h3>Filters</h3>
 
                     <div className="filter-group">
@@ -120,7 +120,7 @@ function Category() {
                             <option value="4.5">4.5 ★ & above</option>
                         </select>
                     </div>
-                </aside>
+                </aside> */}
 
                 {/* Products */}
                 <section className="product-grid">
