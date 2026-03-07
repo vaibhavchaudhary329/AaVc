@@ -15,4 +15,10 @@ public class ProductResponse {
     private Integer stock;
     private String imageUrl;
     private String categoryName;
+    private Long categoryId;
+
+    // Include new fields for the frontend
+    private String brand;
+    private Double rating;
+    private Integer salesCount;
 }

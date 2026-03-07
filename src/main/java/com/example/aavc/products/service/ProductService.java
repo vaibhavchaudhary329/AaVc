@@ -22,4 +22,7 @@ public interface ProductService {
     List<ProductResponse> searchProducts(String keyword);
 
     void updateStock(Long productId, Integer stock);
+
+    List<String> getAllBrands();
+
 }

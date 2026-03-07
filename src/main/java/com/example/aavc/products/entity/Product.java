@@ -33,6 +33,14 @@ public class Product {
 
     private String imageUrl;
 
+    // --- NEW WALMART-STYLE FIELDS ---
+    private String brand;
+
+    private Double rating;
+
+    private Integer salesCount;
+    // --------------------------------
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
