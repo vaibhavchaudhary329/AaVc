@@ -9,65 +9,19 @@ body {
     background-color: #f5f7fa;
 }
 
-.app-container {
+.productpage-container {
     width: 100%;
 }
 
-/* Header */
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 24px;
-    background: linear-gradient(90deg, #ffffff, #f8f9ff);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.logo {
-    font-weight: 700;
-    font-size: 22px;
-    cursor: pointer;
-    color: #4f46e5;
-    letter-spacing: 1px;
-}
-
-.input-search-header {
-    flex: 1;
-    max-width: 33%;
-    margin: 0 20px;
-    display: flex;
-    align-items: center;
-    background: #f3f4f6;
-    border-radius: 30px;
-    padding: 6px 14px;
-    transition: all 0.3s ease;
-}
-
-.input-search-header:focus-within {
-    background: #ffffff;
-    box-shadow: 0 0 0 2px #6366f1;
-}
-
-.input-search-header input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    outline: none;
-    font-size: 14px;
-    padding: 6px;
-}
 
 /* Main layout */
-.main {
+.product-container {
     display: flex;
 }
 
 /* Filters */
-.filters {
-    width: 240px;
+.filters-container {
+    width: 100%;
     padding: 20px;
     background: #ffffff;
     border-right: 1px solid #e5e7eb;
@@ -183,4 +137,59 @@ body {
 
 .cart-icon:hover {
     color: #4f46e5;
+}
+
+
+
+/* .product-page {
+    padding: 30px;
+} */
+
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filter-bar button {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+.filter-bar select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.dropdown {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 200px;
+    position: relative;
+    top: -30px;
+    left: 20px;
+}
+
+.price-box {
+    display: flex;
+    gap: 10px;
+}
+
+.price-box input {
+    width: 80px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }

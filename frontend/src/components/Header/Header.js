@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { getProducts, getCategories, getProductByCategory, getSearch, getHome, getUserDetails } from '../../api/api'; // Ensure this path is correct for your updated api.js
+import { getHome, getUserDetails } from '../../api/api'; // Ensure this path is correct for your updated api.js
 import { FaCircle } from 'react-icons/fa'; // User avatar icon
 import "../Header/Header.css"
 
@@ -13,7 +13,6 @@ function Header() {
     const [userData, setUserData] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchitem, setSearchItem] = useState("");
-    const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -46,7 +45,7 @@ function Header() {
                 navigate("/home");
             } catch (error) {
                 console.error("Error is", error);
-                setError('Error in User Home API');
+                setError('Error in Welcome Msg ');
             }
         };
 
@@ -75,60 +74,16 @@ function Header() {
         }
     }, []);
 
-
-    // useEffect(() => {
-    //     const fetchProducts = async () => {
-    //         try {
-    //             const response = await getProducts();
-    //             setProducts(response);
-    //         } catch (error) {
-    //             console.error("Error is", error);
-    //             setError('Error in User Home API');
-    //         }
-    //     };
-
-    //     fetchProducts();
-    // }, [])
-
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await getCategories();
-                setCategories(response);
-            } catch (error) {
-                console.error("Error is", error);
-                setError('Error in User Home API');
-            }
-        };
-
-        fetchCategories();
-    }, [])
-
-
-    // useEffect(() => {
-    //     const fetchProductByCategory = async () => {
-    //         try {
-    //             const response = await getProductByCategory();
-    //             // setCategories(response);
-    //             // console.log("Categories: Products ", response);
-    //         } catch (error) {
-    //             console.error("Error is", error);
-    //             setError('Error in User Home API');
-    //         }
-    //     };
-
-    //     fetchProductByCategory();
-    // }, [])
-
     const handleSearch = (searchitem) => {
         if (!searchitem.trim()) return;
         navigate(`/home/search?q=${searchitem}`)
     }
 
     return (
-        <div className="app-container">
-            <header className="header">
+        <div className="header-container">
+            {error && <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>}
+
+            {!error && <div className="main-header">
                 <div className="logo-header">
                     <h2 className="logo" onClick={() => navigate('/home')}>AAVC</h2>
                 </div>
@@ -162,8 +117,9 @@ function Header() {
                         <div onClick={handleLogout}>Logout</div>
                     </div>
                 )}
-            </header>
-        </div>
+            </div>}
+
+        </div >
     );
 }
 

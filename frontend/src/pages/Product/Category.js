@@ -99,29 +99,7 @@ function Category() {
 
             <div className="main">
                 {/* Filters */}
-                {/* <aside className="filters">
-                    <h3>Filters</h3>
-
-                    <div className="filter-group">
-                        <label>Max Price (₹)</label>
-                        <input
-                            type="number"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="filter-group">
-                        <label>Minimum Rating</label>
-                        <select onChange={(e) => setMinRating(e.target.value)}>
-                            <option value="0">All</option>
-                            <option value="3">3 ★ & above</option>
-                            <option value="4">4 ★ & above</option>
-                            <option value="4.5">4.5 ★ & above</option>
-                        </select>
-                    </div>
-                </aside> */}
-
+               
                 {/* Products */}
                 <section className="product-grid">
                     {categories.map((category) => (

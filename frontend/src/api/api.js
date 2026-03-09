@@ -57,14 +57,14 @@ export const forgetPassword = async (data) => {
 };
 
 export const resetPassword = async (data) => {
-  const response = await api.post('/auth/reset-password', data); // Use 'api.post'
+  const response = await api.post('/auth/reset-password', data); 
   return response;
 };
 
 export const getHome = async () => {
   try {
-    const response = await api.get('/user/home'); // <-- CRITICAL: NOW USES 'api.get'
-    return response.data; // Ensure your backend returns the raw string "Welcome User!" or similar
+    const response = await api.get('/user/home');
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -102,7 +102,7 @@ export const getProductByCategory = async (categoryId) => {
 
 export const getSearch = async (query) => {
   try {
-    const response = await api.get(`/api/products/search?q=${query}`); 
+    const response = await api.get(`/api/products/search?q=${query}`);
     return response.data;
   } catch (error) {
     throw error;
