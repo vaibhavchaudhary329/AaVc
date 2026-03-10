@@ -119,7 +119,13 @@ public class ProductServiceImpl implements ProductService {
                 .stock(product.getStock())
                 .imageUrl(product.getImageUrl())
                 .categoryName(product.getCategory().getName())
+                .brand(product.getBrand())
+                .rating(product.getRating())
+                .salesCount(product.getSalesCount())
                 .build();
+    }
+    public List<String> getAllBrands() {
+        return productRepository.findDistinctBrands();
     }
 }
 
