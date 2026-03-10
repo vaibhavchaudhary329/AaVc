@@ -59,7 +59,7 @@ function Header() {
 
             } catch (error) {
                 console.error("Error is", error.response.data.message);
-                setError('Error in fetching user data');
+                setError('Error in fetching user data header');
                 // alert("Error from home fetchuserdata ");
                 navigate('/home')
             }
@@ -111,7 +111,7 @@ function Header() {
                 </div>
 
                 {showDropdown && (
-                    <div className="dropdown">
+                    <div className="dropdown-header">
                         <div onClick={handleEdit}>Profile</div>
                         <div onClick={handlePasswordChange}>Change Password</div>
                         <div onClick={handleLogout}>Logout</div>

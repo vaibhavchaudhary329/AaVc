@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Product.css";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getProducts, getCategories, getProductByCategory, getSearch } from '../../api/api'; // Ensure this path is correct for your updated api.js
+import { getProducts, getProductByCategory, getSearch, getProductsByFilter } from '../../api/api'; // Ensure this path is correct for your updated api.js
 
 function Product() {
     // const [searchedProduct, setSearchedProduct] = useState([]);
+    const dropdownRef = useRef(null);
     const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -17,34 +18,37 @@ function Product() {
 
     const brands = ["Apple", "Samsung", "Sony", "Nike", "Adidas"];
 
-    const dummyProducts = [
-        { id: 1, name: "iPhone 15", brand: "Apple", price: 70000, rating: 4.5 },
-        { id: 2, name: "Galaxy S23", brand: "Samsung", price: 65000, rating: 4.2 },
-        { id: 3, name: "Sony Headphones", brand: "Sony", price: 15000, rating: 4.1 },
-        { id: 4, name: "Nike Shoes", brand: "Nike", price: 8000, rating: 3.9 },
-        { id: 5, name: "Adidas Shoes", brand: "Adidas", price: 7500, rating: 4.3 },
-        { id: 6, name: "AirPods", brand: "Apple", price: 20000, rating: 4.4 }
-    ];
-    const [brand, setBrand] = useState(false)
+
+    const [brandname, setBrandName] = useState([])
     const [showBrand, setShowBrand] = useState(false)
     const [showPrice, setShowPrice] = useState(false)
     const [showRating, setShowRating] = useState(false)
-
+    const [openFilter, setOpenFilter] = useState(null);
     const [selectedBrands, setSelectedBrands] = useState([])
+    const [brandSearch, setBrandSearch] = useState("");
     const [minPrice, setMinPrice] = useState("")
     const [maxPrice, setMaxPrice] = useState("")
     const [rating, setRating] = useState("")
-    const [sort, setSort] = useState("priceAsc")
+    const [sort, setSort] = useState("highly_rated")
 
-    const handleBrandChange = (e) => {
-
-        if (e.target.checked) {
-            setBrand([...brand, e.target.value])
-        } else {
-            setBrand(brand.filter(b => b !== e.target.value))
-        }
-
+    // CLEAR BRAND
+    const clearBrands = () => {
+        setSelectedBrands([])
     }
+
+
+    // FILTER SEARCHED BRANDS
+    const filteredBrands = brands.filter(b =>
+        b.toLowerCase().includes(brandSearch.toLowerCase())
+    );
+
+    const handleBrandChange = (brand) => {
+        if (selectedBrands.includes(brand)) {
+            setSelectedBrands(selectedBrands.filter(b => b !== brand));
+        } else {
+            setSelectedBrands([...selectedBrands, brand]);
+        }
+    };
     const searchProduct = async (searcheditem) => {
         try {
             const response = await getSearch(searcheditem);
@@ -60,29 +64,6 @@ function Product() {
         navigate(`/home/productdetail`, { state: { product } });
     }
 
-
-    useEffect(() => {
-
-        fetchProducts()
-
-    }, [brand, minPrice, maxPrice, rating, sort])
-
-
-
-
-    const fetchProducts = async () => {
-        // const response = await api.get("/api/products", {
-        //     params: {
-        //         brand: brand.join(","),
-        //         minPrice,
-        //         maxPrice,
-        //         rating,
-        //         sort
-        //     }
-        // })
-        // setProducts(response.data)
-    }
-
     useEffect(() => {
         if (query) {
             setIsSearch(true);
@@ -91,18 +72,38 @@ function Product() {
     })
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setOpenFilter(null);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => { document.removeEventListener("mousedown", handleClickOutside); };
+    }, []);
+
+    const buildFilters = () => {
+        const filters = { q: '' };
+        if (selectedBrands.length) filters.brands = selectedBrands.join(",");
+        if (minPrice) filters.minPrice = minPrice;
+        if (maxPrice) filters.maxPrice = maxPrice;
+        if (rating) filters.rating = rating;
+        if (sort) filters.sort = sort;
+        return filters;
+    };
+
+    useEffect(() => {
+        const productsFilter = async () => {
             try {
-                const response = await getProducts();
-                // setProducts(response);
+                const filters = buildFilters();
+                const response = await getProductsByFilter(filters);
+                setProducts(response.content);
             } catch (error) {
                 console.error("Error is", error);
                 setError('Error in User Home API');
             }
         };
-        fetchProducts();
-    }, [])
-
+        productsFilter();
+    }, [[selectedBrands, minPrice, maxPrice, rating, sort]])
 
     useEffect(() => {
         const fetchProductByCategory = async () => {
@@ -115,7 +116,6 @@ function Product() {
                 setError('Error in User Home API');
             }
         };
-
         fetchProductByCategory();
     }, [])
 
@@ -123,83 +123,95 @@ function Product() {
         <div className="productpage-container">
             <div className="filters-container">
                 <h3>Filters</h3>
-
                 <div className="filter-bar">
-
-                    <button onClick={() => setShowBrand(!showBrand)}>
+                    <button
+                        className="filter-pill"
+                        onClick={() => setOpenFilter(openFilter === "brand" ? null : "brand")}
+                    >
                         Brand ▼
                     </button>
-
-                    <button onClick={() => setShowPrice(!showPrice)}>
+                    <button className="filter-pill" onClick={() => setOpenFilter(openFilter === "price" ? null : "price")}>
                         Price ▼
                     </button>
-
-                    <button onClick={() => setShowRating(!showRating)}>
+                    {/* <button className="filter-pill" onClick={() => setShowRating(!showRating)}>
                         Rating ▼
-                    </button>
-
+                    </button> */}
                     <select
                         value={sort}
                         onChange={(e) => setSort(e.target.value)}
                     >
-                        <option value="priceAsc">Price Low → High</option>
-                        <option value="priceDesc">Price High → Low</option>
+                        <option value="price_asc">Price Low → High</option>
+                        <option value="price_dsc">Price High → Low</option>
                     </select>
-
-
-                    <div className="price-box">
-
-                        <input
-                            type="range"
-                            min="0"
-                            max="100000"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                        />
-
-                        <input
-                            type="number"
-                            placeholder="Min"
-                            value={minPrice}
-                            onChange={(e) => setMinPrice(e.target.value)}
-                        />
-
-                        <input
-                            type="number"
-                            placeholder="Max"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                        />
-
-                    </div>
-
                     <select onChange={(e) => setRating(e.target.value)}>
-
-                        <option value="">All</option>
+                        <option value="">Rating</option>
                         <option value="4">4★ & above</option>
                         <option value="3">3★ & above</option>
                         <option value="2">2★ & above</option>
-
                     </select>
-
-
                 </div>
 
+                {openFilter === "brand" && (
+                    <div ref={dropdownRef} className="dropdown-filter">
 
-                {showBrand && (
-                    <div className="dropdown">
+                        <div className="brand-search-wrapper">
+                            <i className="ri-search-line brand-search-icon"></i>
 
-                        {brands.map((b) => (
-                            <label key={b}>
-                                <input
-                                    type="checkbox"
-                                    value={b}
-                                    onChange={handleBrandChange}
-                                />
-                                {b}
-                            </label>
-                        ))}
+                            <input
+                                className="brand-search"
+                                placeholder="Find a brand"
+                                value={brandSearch}
+                                onChange={(e) => setBrandSearch(e.target.value)}
+                            />
+                        </div>
 
+                        <div className="brand-list">
+                            {filteredBrands.map((brand) => (
+                                <label key={brand} className="brand-item">
+
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedBrands.includes(brand)}
+                                        onChange={() => handleBrandChange(brand)}
+                                    />
+
+                                    <span>{brand}</span>
+
+                                </label>
+                            ))}
+                        </div>
+
+                        <div className="clear-btn" onClick={clearBrands}>
+                            Clear
+                        </div>
+
+                    </div>
+                )}
+                {openFilter === "price" && (
+                    <div className="dropdown-filter">
+                        <div className="price-slider">
+                            <input
+                                type="range"
+                                min="0"
+                                max="100000"
+                                value={maxPrice}
+                                onChange={(e) => setMaxPrice(e.target.value)}
+                            />
+                        </div>
+                        <div className="price-inputs">
+                            <input
+                                type="number"
+                                placeholder="Min"
+                                value={minPrice}
+                                onChange={(e) => setMinPrice(e.target.value)}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Max"
+                                value={maxPrice}
+                                onChange={(e) => setMaxPrice(e.target.value)}
+                            />
+                        </div>
                     </div>
                 )}
             </div>
@@ -225,26 +237,3 @@ function Product() {
 }
 
 export default Product;
-
-/*
-
-/api/products?
-brand=Apple,Sony
-&minPrice=1000
-&maxPrice=50000
-&rating=4
-&sort=priceAsc
-
-
-
-
-/api/products?
-brand=Apple,Sony
-&minPrice=1000
-&maxPrice=50000
-&rating=4
-&sort=priceAsc
-
-
-
-*/

@@ -77,28 +77,26 @@
     color: #111827;
 }
 
-.dropdown {
+.dropdown-header {
     position: absolute;
     right: 20px;
     top: 60px;
-
     background: white;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-
     padding: 10px 0;
     min-width: 160px;
     animation: fadeIn 0.2s ease;
 }
 
-.dropdown div {
+.dropdown-header div {
     padding: 10px 16px;
     font-size: 14px;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.dropdown div:hover {
+.dropdown-header div:hover {
     background: #f3f4f6;
 }
 

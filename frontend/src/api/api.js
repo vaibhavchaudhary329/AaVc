@@ -57,7 +57,7 @@ export const forgetPassword = async (data) => {
 };
 
 export const resetPassword = async (data) => {
-  const response = await api.post('/auth/reset-password', data); 
+  const response = await api.post('/auth/reset-password', data);
   return response;
 };
 
@@ -111,6 +111,14 @@ export const getSearch = async (query) => {
 
 
 
+export const getProductsByFilter = async (filters) => {
+  try {
+    const response = await api.get(`/api/products/sort`, {params: filters});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 
 export const getUserDetails = async ({ identifier }) => {
