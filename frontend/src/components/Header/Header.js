@@ -88,8 +88,11 @@ function Header() {
                     <h2 className="logo" onClick={() => navigate('/home')}>AAVC</h2>
                 </div>
                 <div className="address">
-                    <span className="delivery-type">Pickup or Delivery</span>
-                    <span className="delivery-location">Mumbai</span>
+                    <div className="delivery-type">Pickup or Delivery</div>
+                    <div className="delivery-location">
+                        <i className="ri-map-pin-line"></i>
+                        Mumbai
+                    </div>
                 </div>
                 <div className="input-search-header">
                     <i className="ri-search-line searchicon" onClick={() => handleSearch(searchitem)} ></i>
@@ -104,12 +107,13 @@ function Header() {
                         }}
                     />
                 </div>
-                <i className="ri-shopping-cart-2-line cart-icon"></i>
-                <div className="avatar-wrapper" onClick={toggleDropdown}>
-                    <FaCircle className="avatar-circle" />
-                    <span className="avatar-initials">{initials}</span>
+                <div className="header-right">
+                    <i className="ri-shopping-cart-2-line cart-icon"></i>
+                    <div className="avatar-wrapper" onClick={toggleDropdown}>
+                        <FaCircle className="avatar-circle" />
+                        <span className="avatar-initials">{initials}</span>
+                    </div>
                 </div>
-
                 {showDropdown && (
                     <div className="dropdown-header">
                         <div onClick={handleEdit}>Profile</div>

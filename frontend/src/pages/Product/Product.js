@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Product.css";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getProducts, getProductByCategory, getSearch, getProductsByFilter } from '../../api/api'; // Ensure this path is correct for your updated api.js
+import ProductImage from '../../assets/images/Products.jpeg';
 
 function Product() {
     // const [searchedProduct, setSearchedProduct] = useState([]);
@@ -103,7 +104,7 @@ function Product() {
             }
         };
         productsFilter();
-    }, [[selectedBrands, minPrice, maxPrice, rating, sort]])
+    }, [selectedBrands, minPrice, maxPrice, rating, sort])
 
     useEffect(() => {
         const fetchProductByCategory = async () => {
@@ -140,8 +141,8 @@ function Product() {
                         value={sort}
                         onChange={(e) => setSort(e.target.value)}
                     >
-                        <option value="price_asc">Price Low → High</option>
-                        <option value="price_dsc">Price High → Low</option>
+                        <option value="price_low">Price Low → High</option>
+                        <option value="price_high">Price High → Low</option>
                     </select>
                     <select onChange={(e) => setRating(e.target.value)}>
                         <option value="">Rating</option>
@@ -222,9 +223,13 @@ function Product() {
                         <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
                             <h3>{product.name}</h3>
                             <img
-                                src={product.imageUrl}
+                                src={product.imageUrl || ProductImage}
                                 alt={product.name}
                                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = ProductImage;
+                                }}
                             />
                             <p className="price">₹{product.price}</p>
                             <p className="rating">{product.stock !== 0 ? 'In Stock' : 'Out of Stock'}</p>

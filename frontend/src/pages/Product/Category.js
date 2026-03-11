@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Product.css";
 import { useNavigate } from 'react-router-dom';
 import { getProducts, getCategories, getProductByCategory, getSearch } from '../../api/api'; // Ensure this path is correct for your updated api.js
-
+import CategoryImage from '../../assets/images/Categories.jpeg';
 
 function Category() {
     const [maxPrice, setMaxPrice] = useState(1000);
@@ -75,7 +75,7 @@ function Category() {
         navigate(`/home/product/${categoryid}`)
     }
 
-   
+
     // const filteredProducts = products.filter(
     //     (p) =>
     //         p.name.toLowerCase().includes(search.toLowerCase()) &&
@@ -99,7 +99,7 @@ function Category() {
 
             <div className="main">
                 {/* Filters */}
-               
+
                 {/* Products */}
                 <section className="product-grid">
                     {categories.map((category) => (
@@ -107,9 +107,13 @@ function Category() {
 
                             {/* <p>{category.description}</p> */}
                             <img
-                                src={category.imageUrl}
+                                src={category.imageUrl || CategoryImage}
                                 alt={category.description}
                                 style={{ width: "200px", height: "200px", objectFit: "cover" }}
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = CategoryImage;
+                                }}
                             />
                             <h3>{category.name}</h3>
                         </div>
