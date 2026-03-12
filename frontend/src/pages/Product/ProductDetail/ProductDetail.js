@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./Product.css";
+import "./ProductDetail.css";
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { getProducts, getCategories, getProductByCategory, getSearch } from '../../api/api'; // Ensure this path is correct for your updated api.js
-
+import { getProducts, getCategories, getProductByCategory, getSearch } from '../../../api/api'; // Ensure this path is correct for your updated api.js
+import ProductImage from '../../../assets/images/Products.jpeg';
 
 function ProductDetail() {
     const location = useLocation();
@@ -102,12 +102,19 @@ function ProductDetail() {
                                 <li key={index}>{item}</li>
                             ))}
                         </ul>
-                        <p className="price">₹{product.price}</p>
-                       <p className="rating">{product.stock !==0 ? 'In Stock' : 'Out of Stock' }</p>
+                        <div className="productdetail-subdetails">
+                            <p className="price">₹{product.price}</p>
+                            <p className="rating">{'*'} {product.rating}</p>
+                            <p className="stock">{product.stock !== 0 ? 'In Stock' : 'Out of Stock'}</p>
+                        </div>
                         <img
-                            src={product.imageUrl}
+                            src={product.imageUrl || ProductImage}
                             alt={product.name}
                             style={{ width: "200px", height: "200px", objectFit: "cover" }}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = ProductImage;
+                            }}
                         />
                     </div>
                 </section>

@@ -7,9 +7,9 @@ import Home from './pages/Home/Home';
 import ForgetPassword from './components/ForgetPasswrod';
 import ResetPassword from './components/ResetPassword';
 import EditUser from './components/EditUser';
-import Product from './pages/Product/Product';
-import Category from './pages/Product/Category';
-import ProductDetail from './pages/Product/ProductDetail';
+import Product from './pages/Product/Product/Product';
+import Category from './pages/Product/Category/Category';
+import ProductDetail from './pages/Product/ProductDetail/ProductDetail';
 import Header from './components/Header/Header';
 
 function App() {

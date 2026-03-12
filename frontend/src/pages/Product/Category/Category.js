@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./Product.css";
+import "./Category.css";
 import { useNavigate } from 'react-router-dom';
-import { getProducts, getCategories, getProductByCategory, getSearch } from '../../api/api'; // Ensure this path is correct for your updated api.js
-import CategoryImage from '../../assets/images/Categories.jpeg';
+import { getProducts, getCategories, getProductByCategory, getSearch } from '../../../api/api'; // Ensure this path is correct for your updated api.js
+import CategoryImage from '../../../assets/images/Categories.jpeg';
 
 function Category() {
     const [maxPrice, setMaxPrice] = useState(1000);

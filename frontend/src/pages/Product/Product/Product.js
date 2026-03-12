@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Product.css";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getProducts, getProductByCategory, getSearch, getProductsByFilter } from '../../api/api'; // Ensure this path is correct for your updated api.js
-import ProductImage from '../../assets/images/Products.jpeg';
+import { getProducts, getProductByCategory, getSearch, getProductsByFilter } from '../../../api/api'; // Ensure this path is correct for your updated api.js
+import ProductImage from '../../../assets/images/Products.jpeg';
 
 function Product() {
     // const [searchedProduct, setSearchedProduct] = useState([]);
@@ -19,11 +19,6 @@ function Product() {
 
     const brands = ["Apple", "Samsung", "Sony", "Nike", "Adidas"];
 
-
-    const [brandname, setBrandName] = useState([])
-    const [showBrand, setShowBrand] = useState(false)
-    const [showPrice, setShowPrice] = useState(false)
-    const [showRating, setShowRating] = useState(false)
     const [openFilter, setOpenFilter] = useState(null);
     const [selectedBrands, setSelectedBrands] = useState([])
     const [brandSearch, setBrandSearch] = useState("");
@@ -37,8 +32,6 @@ function Product() {
         setSelectedBrands([])
     }
 
-
-    // FILTER SEARCHED BRANDS
     const filteredBrands = brands.filter(b =>
         b.toLowerCase().includes(brandSearch.toLowerCase())
     );
@@ -134,13 +127,7 @@ function Product() {
                     <button className="filter-pill" onClick={() => setOpenFilter(openFilter === "price" ? null : "price")}>
                         Price ▼
                     </button>
-                    {/* <button className="filter-pill" onClick={() => setShowRating(!showRating)}>
-                        Rating ▼
-                    </button> */}
-                    <select
-                        value={sort}
-                        onChange={(e) => setSort(e.target.value)}
-                    >
+                    <select value={sort} onChange={(e) => setSort(e.target.value)} >
                         <option value="price_low">Price Low → High</option>
                         <option value="price_high">Price High → Low</option>
                     </select>
@@ -231,8 +218,11 @@ function Product() {
                                     e.target.src = ProductImage;
                                 }}
                             />
-                            <p className="price">₹{product.price}</p>
-                            <p className="rating">{product.stock !== 0 ? 'In Stock' : 'Out of Stock'}</p>
+                            <div className="productdetail-subdetails">
+                                <p className="price">₹{product.price}</p>
+                                <p className="rating">{'*'} {product.rating}</p>
+                                <p className="stock">{product.stock !== 0 ? 'In Stock' : 'Out of Stock'}</p>
+                            </div>
                         </div>
                     ))}
                 </section>

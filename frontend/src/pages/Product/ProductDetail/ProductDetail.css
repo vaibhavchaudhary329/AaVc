@@ -1,0 +1,19 @@
+.productdetail-subdetails {
+    display: flex;
+    gap: 20px;
+
+    .price {
+        font-weight: 700;
+        color: #16a34a;
+    }
+
+    .rating {
+        font-size: 14px;
+        color: #f59e0b;
+    }
+
+    .stock {
+        color: blue;
+        font-size: small;
+    }
+}

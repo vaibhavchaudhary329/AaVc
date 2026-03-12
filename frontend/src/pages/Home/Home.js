@@ -3,7 +3,7 @@ import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import { getHome, getUserDetails } from '../../api/api';
-import Category from '../Product/Category';
+import Category from '../Product/Category/Category';
 
 function Home() {
     const [message, setMessage] = useState('');

@@ -58,7 +58,7 @@ function Header() {
                 setUserData({ fullName: response.fullName, email: response.email, mobile: response.mobile });
 
             } catch (error) {
-                console.error("Error is", error.response.data.message);
+                console.error("Error is", error.response?.data.message);
                 setError('Error in fetching user data header');
                 // alert("Error from home fetchuserdata ");
                 navigate('/home')
@@ -111,7 +111,7 @@ function Header() {
                     <i className="ri-shopping-cart-2-line cart-icon"></i>
                     <div className="avatar-wrapper" onClick={toggleDropdown}>
                         <FaCircle className="avatar-circle" />
-                        <span className="avatar-initials">{initials}</span>
+                        <div className="avatar-initials">{initials}</div>
                     </div>
                 </div>
                 {showDropdown && (
