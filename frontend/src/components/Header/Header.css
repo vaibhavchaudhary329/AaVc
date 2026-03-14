@@ -66,8 +66,7 @@
 }
 
 .input-search-header {
-    flex: 1;
-    max-width: 420px;
+    width: 50%;
     margin: 0 20px;
     display: flex;
     align-items: center;

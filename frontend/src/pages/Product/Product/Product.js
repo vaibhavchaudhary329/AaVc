@@ -25,10 +25,14 @@ function Product() {
     const [minPrice, setMinPrice] = useState("")
     const [maxPrice, setMaxPrice] = useState("")
     const [rating, setRating] = useState("")
-    const [sort, setSort] = useState("highly_rated")
+    const [sort, setSort] = useState("")
 
     // CLEAR BRAND
     const clearBrands = () => {
+        setSelectedBrands([])
+    }
+
+    const clearFilter = () => {
         setSelectedBrands([])
     }
 
@@ -116,7 +120,9 @@ function Product() {
     return (
         <div className="productpage-container">
             <div className="filters-container">
-                <h3>Filters</h3>
+                <div className="filter-title">
+                    <h3>Filters: </h3>
+                </div>
                 <div className="filter-bar">
                     <button
                         className="filter-pill"
@@ -127,16 +133,25 @@ function Product() {
                     <button className="filter-pill" onClick={() => setOpenFilter(openFilter === "price" ? null : "price")}>
                         Price ▼
                     </button>
-                    <select value={sort} onChange={(e) => setSort(e.target.value)} >
-                        <option value="price_low">Price Low → High</option>
-                        <option value="price_high">Price High → Low</option>
-                    </select>
-                    <select onChange={(e) => setRating(e.target.value)}>
-                        <option value="">Rating</option>
+                    <select className="filter-pill-select" value={rating} onChange={(e) => setRating(e.target.value)}>
+                        <option value="" disabled>Rating</option>
                         <option value="4">4★ & above</option>
                         <option value="3">3★ & above</option>
                         <option value="2">2★ & above</option>
                     </select>
+                    <select className="filter-pill-select" value={sort} onChange={(e) => setSort(e.target.value)} >
+                        <option value="" disabled>Sort</option>
+                        <option value="price_low">Price: Low → High</option>
+                        <option value="price_high">Price: High → Low</option>
+                        <option value="best_seller">Best Seller</option>
+                        <option value="highly_rated">Highly Rated</option>
+                    </select>
+                    <div className="clear-btn" onClick={clearFilter}>
+                        Clear ALL
+                    </div>
+                    <div>
+                        {"Products ("}{products.length}{")"}
+                    </div>
                 </div>
 
                 {openFilter === "brand" && (
@@ -172,7 +187,6 @@ function Product() {
                         <div className="clear-btn" onClick={clearBrands}>
                             Clear
                         </div>
-
                     </div>
                 )}
                 {openFilter === "price" && (
