@@ -60,28 +60,9 @@ function Category() {
     // }, [])
 
 
-    const searchProduct = async (searcheditem) => {
-        try {
-            const response = await getSearch(searcheditem);
-            setSearchedProduct(response);
-            console.log("Search: ", response);
-        } catch (error) {
-            console.error("Error is", error);
-            setError('Error in User Home API');
-        }
-    };
-
     const handleCategoryClick = (categoryid) => {
         navigate(`/home/product/${categoryid}`)
     }
-
-
-    // const filteredProducts = products.filter(
-    //     (p) =>
-    //         p.name.toLowerCase().includes(search.toLowerCase()) &&
-    //         p.price <= maxPrice &&
-    //         p.rating >= minRating
-    // );
 
     return (
         <div className="app-container">

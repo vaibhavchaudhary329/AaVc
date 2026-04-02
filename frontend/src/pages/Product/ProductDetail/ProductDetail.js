@@ -65,32 +65,6 @@ function ProductDetail() {
     //    fetchProductByCategory();
     // }, [])
 
-
-    //  useEffect(() => {
-    //     console.log("This is Search")
-    //     const searchProduct = async () => {
-    //         try {
-    //             const response = await getSearch('iphone');
-    //             // setCategories(response);
-    //             console.log("Search: ", response);
-    //         } catch (error) {
-    //             console.error("Error is", error);
-    //             setError('Error in User Home API');
-    //         }
-    //     };
-
-    //    searchProduct();
-    // }, [])
-
-
-
-    // const filteredProducts = products.filter(
-    //     (p) =>
-    //         p.name.toLowerCase().includes(search.toLowerCase()) &&
-    //         p.price <= maxPrice &&
-    //         p.rating >= minRating
-    // );
-
     return (
         <div className="app-container">
             <div className="main">

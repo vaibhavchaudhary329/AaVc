@@ -5,8 +5,8 @@
     z-index: 1000;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 24px;
+    justify-content: center;
+    padding: 10px;
     background: linear-gradient(90deg, #ffffff, #f8f9ff);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
@@ -33,12 +33,12 @@
 }
 
 
-
-
 .address {
+    width:100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     background: #f3f4f6;
     padding: 6px 14px;
     border-radius: 30px;
@@ -98,6 +98,12 @@
 
 
 .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-left {
     display: flex;
     align-items: center;
     gap: 12px;
